@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/ico">
+        <file>res/qtext_ico.svg</file>
+    </qresource>
+</RCC>
