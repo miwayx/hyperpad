@@ -21,7 +21,7 @@ or
 ```
 $ make uninstall
 ```
-## Contributing
+## Contribiting
 Please read [docs/CONTRIBUTING.md](CONTRIBUTING.md) file
 ## License
 This project is licensed under the GPL v3 License - see the [LICENSE](LICENSE) file for details
