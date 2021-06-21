@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     //Application Config
     QApplication::setApplicationName("qText");
-    QApplication::setApplicationVersion("1.0");
+    QApplication::setApplicationVersion("0.40");
     QApplication::setOrganizationName("qText");
     QApplication::setOrganizationDomain("https://github.con/ern126/qText");
     QApplication::setWindowIcon(QIcon::fromTheme("text-editor",QIcon(":/ico/res/qtext_ico.svg")));
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
             if(filename.exists()){
                 mw.openfile(text_arg);
             }else{
-                qDebug("[Error] File not found");
+                qDebug("qText: error, file not found");
                 exit(1);
             }
         }

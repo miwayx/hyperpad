@@ -113,6 +113,10 @@ void MainWindow::readAllSettings()
 void MainWindow::setupToolbarAndStatusbar()
 {
 
+    // DIsable find
+    ui->actionFind->setEnabled(false);
+    //ui->toolBar->addAction(ui->actionFind);
+    // Actions
     ui->toolBar->addAction(ui->actionNew);
     ui->toolBar->addAction(ui->actionOpen);
     ui->toolBar->addAction(ui->actionSave);
@@ -125,7 +129,7 @@ void MainWindow::setupToolbarAndStatusbar()
     ui->toolBar->addAction(ui->actionDelete);
     ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionFont);
-    ui->toolBar->addAction(ui->actionFind);
+
 
     status = new QLabel;
     ui->statusbar->addWidget(status);
@@ -193,7 +197,7 @@ bool MainWindow::documentModified()
 {
     if(!saved){
         if(ui->plainTextEdit->document()->isModified()){
-            // if the document have a change launch a message
+            // if the document change launch a message
             QMessageBox *msgBox = new QMessageBox(this);
             //msgBox->setModal(true);
             msgBox->setText("The document has been modified.");

@@ -6,20 +6,20 @@ These instructions will get you a copy of the project and running on your local 
 qText is make with Qt and running in Linux, MacOs and Windows
 
 ##  Build
-To build your need to have installed make and Qt5 in your system.
+To build your need have installed make and qt5 in your system.
 ```
-$ cd src
+$ git clone https://github.com/ern126/qText.git
 $ qmake
 $ make
 ```
 ### Install and unistall
 If your want to install or unistall run
 ```
-make install
+$ make install
 ```
 or 
 ```
-make uninstall
+$ make uninstall
 ```
 ## Contribiting
 Please read [docs/CONTRIBUTING.md](CONTRIBUTING.md) file
