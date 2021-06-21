@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=qText
+Exec=qtext
+Icon=text-editor
+Terminal=false
+Type=Application
+Categories=Utility;TextEditor
+MimeType=text/plain
