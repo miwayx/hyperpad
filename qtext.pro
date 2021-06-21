@@ -19,7 +19,7 @@ FORMS += \
     src/ui/mainwindow.ui
 
 # Default rules for deployment.
-#qnx: target.path = /tmp/$${TARGET}/bin
+
 unix: target.path = /usr/bin
 !isEmpty(target.path): INSTALLS += target
 
