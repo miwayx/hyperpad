@@ -6,7 +6,7 @@ All pull request will be revised
 qText depend on: 
 
 - qt5 (core and widgets modules)
-- qmake
+- cmake
 - make
 
 # Author
