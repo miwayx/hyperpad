@@ -56,7 +56,7 @@ endif()
 # Install Files
 include(GNUInstallDirs)
 install(TARGETS qtext RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-install(FILES assets/application/qtext.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
+install(FILES assets/applications/qtext.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
 install(FILES CONTRIBUTING.md DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/qtext/)
 install(FILES README.md DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/qtext/)
 install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/qtext/)
