@@ -37,38 +37,40 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->setCentralWidget(ui->plainTextEdit);
     this->setWindowIcon(QIcon(QIcon::fromTheme("text-editor",QIcon(":/ico/res/qtext_ico-svg"))));
+    saved = false;
     // Connecting signals
     // verify if exit of the app
     connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(act_exit()));
-    // MEnuBar
-    //File
+    // document changed
+    connect(ui->plainTextEdit,SIGNAL(textChanged()),this,SLOT(act_doc_changed()));
+    // MenuBar
+    // file
     connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(act_new()));
     connect(ui->actionOpen,SIGNAL(triggered(bool)),this,SLOT(act_open()));
     connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(act_save()));
     connect(ui->actionSaveAs,SIGNAL(triggered(bool)),this,SLOT(act_saveas()));
     connect(ui->actionExit,SIGNAL(triggered(bool)),this,SLOT(act_exit()));
-    //View
+    // view
     connect(ui->actionVisible_StatusBar,SIGNAL(toggled(bool)),this,SLOT(act_statusbar()));
     connect(ui->actionVisible_ToolBar,SIGNAL(toggled(bool)),this,SLOT(act_toolbar()));
     connect(ui->actionMovable_ToolBar,SIGNAL(toggled(bool)),this,SLOT(act_toolbar()));
-    // View toolbar style
+    // view toolbar style
     connect(ui->actionToolbar_IconsOnly,SIGNAL(triggered(bool)),this,SLOT(act_toolbar_style_icons_only()));
     connect(ui->actionToolbar_TextOnly,SIGNAL(triggered(bool)),this,SLOT(act_toolbar_style_text_only()));
     connect(ui->actionToolbar_TextBesideIcons,SIGNAL(triggered(bool)),this,SLOT(act_toolbar_style_text_beside_icons()));
     connect(ui->actionToolbar_TextUnderIcons,SIGNAL(triggered(bool)),this,SLOT(act_toolbar_style_text_under_icons()));
     connect(ui->actionToolbar_Follow,SIGNAL(triggered(bool)),this,SLOT(act_toolbar_style_follow()));
-    //Text
+    // text
     connect(ui->actionFind,SIGNAL(triggered(bool)),this,SLOT(act_find()));
     connect(ui->actionFont,SIGNAL(triggered(bool)),this,SLOT(act_newfont()));
-    // Help
+    // help
     connect(ui->actionAbout_qText,SIGNAL(triggered(bool)),this,SLOT(act_about_qtext()));
     connect(ui->actionAbout_Qt,SIGNAL(triggered(bool)),qApp,SLOT(aboutQt()));
 
-    //toolbar setup
+    // Toolbar setup
     setupToolbarAndStatusbar();
-    // Read the configuration
+    // read the configuration
     readAllSettings();
-    saved = false;
 
 }
 
@@ -81,7 +83,6 @@ MainWindow::~MainWindow()
 // Settings
 void MainWindow::saveAllSettings()
 {
-    //Window
     st.setValue("window/geometry",this->geometry());
     st.setValue("window/hidden_statusbar",ui->statusbar->isHidden());
     //st.setValue("window/fullscreen",this->isFullScreen());
@@ -91,29 +92,29 @@ void MainWindow::saveAllSettings()
     st.setValue("toolbar/orientation",ui->toolBar->orientation());
     st.setValue("toolbar/style",ui->toolBar->toolButtonStyle());
     st.setValue("editor/font",ui->plainTextEdit->font());
-
-
 }
+
 void MainWindow::readAllSettings()
 {
     //Window
     // get the window geomery
     this->setGeometry(st.value("window/geometry",QRect(180,150,700,360)).toRect());
     ui->statusbar->setHidden(st.value("window/hidden_statusbar").toBool());
-    //toolbar
+    //Toolbar
     // get state of toolbar
     ui->toolBar->setHidden(st.value("toolbar/hidden").toBool());
     ui->toolBar->setMovable(st.value("toolbar/movable").toBool());
     ui->toolBar->setGeometry(st.value("toolbar/geometry").toRect());
     //ui->toolBar->setOrientation(st.value("toolbar/orientation").value<Qt::Orientation>());
     ui->toolBar->setToolButtonStyle(st.value("toolbar/style").value<Qt::ToolButtonStyle>());
-    //editor
+    //Editor
     ui->plainTextEdit->setFont(st.value("editor/font").value<QFont>());
 }
+
 void MainWindow::setupToolbarAndStatusbar()
 {
 
-    // DIsable find
+    // Disable find
     ui->actionFind->setEnabled(false);
     //ui->toolBar->addAction(ui->actionFind);
     // Actions
@@ -130,11 +131,10 @@ void MainWindow::setupToolbarAndStatusbar()
     ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionFont);
 
-
     status = new QLabel;
     ui->statusbar->addWidget(status);
 
-    // Chekeando
+    // Checking
     if(st.value("toolbar/movable").toBool()==true){
         ui->actionMovable_ToolBar->setChecked(true);
     }
@@ -167,8 +167,7 @@ void MainWindow::openfile(QString filename)
     ui->plainTextEdit->setPlainText(txt);
     file.close();
     // send a message to the statusbar
-    QString fstatus = "File "+filename+" open";
-    status->setText(fstatus);
+    status->setText("File "+filename+" open");
     saved = false;
 }
 
@@ -187,12 +186,12 @@ void MainWindow::savefile(QString filename)
     out << txt;
     file.close();
     // send a message to the statusbar
-    QString fstatus = "File "+filename+" saved";
-    status->setText(fstatus);
+    this->setWindowTitle(filename);
+    status->setText("File "+filename+" saved");
     saved = true;
 }
 
-// Verify for the document
+// Check for the document
 bool MainWindow::documentModified()
 {
     if(!saved){
@@ -227,7 +226,7 @@ bool MainWindow::documentModified()
     return true;
 }
 
-//actions
+//Actions
 void MainWindow::act_exit()
 {
     if(!documentModified()){
@@ -237,10 +236,27 @@ void MainWindow::act_exit()
     }
 }
 
+// document changed
+void MainWindow::act_doc_changed()
+{
+    saved = false;
+    status->setText("File "+currentfile);
+    this->setWindowTitle("*"+currentfile);
+}
+
 // create a new file
 void MainWindow::act_new()
 {
-    if(!documentModified()){
+    if(!saved){
+        documentModified();
+        // just clear the text and the current file
+        currentfile.clear();
+        ui->plainTextEdit->setPlainText(QString());
+
+        this->setWindowTitle("untitled");
+        status->setText("New file");
+        saved = false;
+    }else{
        // just clear the text and the current file
        currentfile.clear();
        ui->plainTextEdit->setPlainText(QString());
@@ -259,7 +275,7 @@ void MainWindow::act_open()
     QString filename = QFileDialog::getOpenFileName(this,"Open a file");
     openfile(filename);
 }
-// Save a file
+// save a file
 void MainWindow::act_save()
 {
     // Verify for the current file, if empty launch a dialog for save the file
@@ -275,7 +291,7 @@ void MainWindow::act_save()
     savefile(filename);
 }
 
-// Save As
+// save as
 void MainWindow::act_saveas()
 {
     QString filename;
@@ -286,7 +302,7 @@ void MainWindow::act_saveas()
     savefile(filename);
 }
 
-// Find a text
+// find a text
 void MainWindow::act_find()
 {
     // Get the thext to find
@@ -295,7 +311,7 @@ void MainWindow::act_find()
     ui->plainTextEdit->find(f);
 }
 
-// Select a new Font
+// felect a new Font
 void MainWindow::act_newfont()
 {
     // This launch te font dialog and verify this, if all is ok, set the font
@@ -361,7 +377,7 @@ void MainWindow::act_toolbar_style_follow()
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
 }
 
-// This is the application about dialog
+// this is the application about dialog
 void MainWindow::act_about_qtext()
 {
     QMessageBox *msg = new QMessageBox(this);

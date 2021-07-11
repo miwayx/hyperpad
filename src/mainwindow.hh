@@ -46,6 +46,7 @@ public:
 
 public slots:
     void act_exit();
+    void act_doc_changed();
     void act_new();
     void act_open();
     void act_save();
