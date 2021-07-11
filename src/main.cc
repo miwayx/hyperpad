@@ -23,8 +23,8 @@
 #include "mainwindow.hh"
 
 #include <QApplication>
-#include <QDebug>
-#include <QFile>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
 #include <QIcon>
 
 int main(int argc, char *argv[])
@@ -34,37 +34,27 @@ int main(int argc, char *argv[])
     QApplication::setApplicationName("qText");
     QApplication::setApplicationVersion("0.40");
     QApplication::setOrganizationName("qText");
-    QApplication::setOrganizationDomain("https://github.con/ern126/qText");
+    QApplication::setOrganizationDomain("https://github.con/ern126/qtext");
     QApplication::setWindowIcon(QIcon::fromTheme("text-editor",QIcon(":/ico/res/qtext_ico.svg")));
 
     // Init
     MainWindow mw;
 
-    // Parsing args
-    if(argc != 1){
-        QString text_arg = argv[1];
-        if(text_arg == "-h")
-        {
-            qDebug("Usage: qText [OPTIONS] [file]\n"
-                   "Option     Meaning\n"
-                   "file       Open a file\n"
-                   "-h         Show this help text and exit\n"
-                   "-v         Print version information and exit\n");
-            exit(1);
-        }else if(text_arg == "-v"){
-            qDebug("qText: %s",qPrintable(QApplication::applicationVersion()));
-            exit(1);
-        }else{
-            QFile filename(text_arg);
-            if(filename.exists()){
-                mw.openfile(text_arg);
-            }else{
-                qDebug("qText: error, file not found");
-                exit(1);
-            }
-        }
+    // Parse Arguments
+    QCommandLineParser parse;
+    parse.setApplicationDescription("qText -Fast Text Editor");
+    parse.addHelpOption();
+    parse.addVersionOption();
+    // file argument
+    QCommandLineOption opt_file(QStringList() << "f" << "file", "Open a file", "file");
+    parse.addOption(opt_file);
+    // Process parse
+    parse.process(a);
+    // Get file argument
+    if(parse.isSet(opt_file)){
+        QString filename = parse.value(opt_file);
+        mw.openfile(filename);
     }
-
 
     mw.show(); //Init Window
     return a.exec();
