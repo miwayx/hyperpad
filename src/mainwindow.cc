@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setCentralWidget(ui->plainTextEdit);
     this->setWindowIcon(QIcon(QIcon::fromTheme("text-editor",QIcon(":/ico/res/qtext_ico-svg"))));
     saved = false;
+
     // Connecting signals
     // verify if exit of the app
     connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(act_exit()));
@@ -51,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSaveAs,SIGNAL(triggered(bool)),this,SLOT(act_saveas()));
     connect(ui->actionExit,SIGNAL(triggered(bool)),this,SLOT(act_exit()));
     // view
+    connect(ui->actionVisible_MenuBar,SIGNAL(toggled(bool)),this,SLOT(act_menubar()));
     connect(ui->actionVisible_StatusBar,SIGNAL(toggled(bool)),this,SLOT(act_statusbar()));
     connect(ui->actionVisible_ToolBar,SIGNAL(toggled(bool)),this,SLOT(act_toolbar()));
     connect(ui->actionMovable_ToolBar,SIGNAL(toggled(bool)),this,SLOT(act_toolbar()));
@@ -67,10 +69,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionAbout_qText,SIGNAL(triggered(bool)),this,SLOT(act_about_qtext()));
     connect(ui->actionAbout_Qt,SIGNAL(triggered(bool)),qApp,SLOT(aboutQt()));
 
+    // Read the configuration
+    readAllSettings();
     // Toolbar setup
     setupToolbarAndStatusbar();
-    // read the configuration
-    readAllSettings();
 
 }
 
@@ -84,6 +86,7 @@ MainWindow::~MainWindow()
 void MainWindow::saveAllSettings()
 {
     st.setValue("window/geometry",this->geometry());
+    st.setValue("window/hidden_menubar", ui->menubar->isHidden());
     st.setValue("window/hidden_statusbar",ui->statusbar->isHidden());
     //st.setValue("window/fullscreen",this->isFullScreen());
     st.setValue("toolbar/hidden",ui->toolBar->isHidden());
@@ -99,6 +102,7 @@ void MainWindow::readAllSettings()
     //Window
     // get the window geomery
     this->setGeometry(st.value("window/geometry",QRect(180,150,700,360)).toRect());
+    ui->menubar->setHidden(st.value("window/hidden_menubar").toBool());
     ui->statusbar->setHidden(st.value("window/hidden_statusbar").toBool());
     //Toolbar
     // get state of toolbar
@@ -135,15 +139,14 @@ void MainWindow::setupToolbarAndStatusbar()
     ui->statusbar->addWidget(status);
 
     // Checking
-    if(st.value("toolbar/movable").toBool()==true){
+    if(ui->menubar->isHidden() == false)
+        ui->actionVisible_MenuBar->setChecked(true);
+    if(st.value("toolbar/movable").toBool() == true)
         ui->actionMovable_ToolBar->setChecked(true);
-    }
-    if(st.value("toolbar/hidden").toBool()==true){
+    if(st.value("toolbar/hidden").toBool() == true)
         ui->actionVisible_ToolBar->setChecked(true);
-    }
-    if(st.value("window/hidden_statusbar").toBool()==true){
+    if(ui->statusbar->isHidden() == false)
         ui->actionVisible_StatusBar->setChecked(true);
-    }
 }
 
 //
@@ -326,14 +329,24 @@ void MainWindow::act_newfont()
     }
 }
 
+// get the state of the menubar action
+void MainWindow::act_menubar()
+{
+   if(ui->actionVisible_MenuBar->isChecked()==true){
+       ui->menubar->setVisible(true);
+   }else{
+       ui->menubar->setVisible(false);
+   }
+}
+
 // get the state of the statusbar actions
 void MainWindow::act_statusbar()
 {
     // If the signal toggle emit true the action is marcked
     if(ui->actionVisible_StatusBar->isChecked()==true){
-        ui->statusbar->setVisible(false);
-    }else{
         ui->statusbar->setVisible(true);
+    }else{
+        ui->statusbar->setVisible(false);
     }
 }
 // get the state of the toolbar actions

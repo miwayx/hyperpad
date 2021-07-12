@@ -157,6 +157,7 @@
     <addaction name="separator"/>
     <addaction name="menuToolbar"/>
     <addaction name="actionVisible_StatusBar"/>
+    <addaction name="actionVisible_MenuBar"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -410,7 +411,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Hidden statusbar</string>
+    <string>Show StatusBar</string>
    </property>
    <property name="toolTip">
     <string>Hidden the statusbar</string>
@@ -439,6 +440,14 @@
   <action name="actionToolbar_Follow">
    <property name="text">
     <string>Follow System</string>
+   </property>
+  </action>
+  <action name="actionVisible_MenuBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show MenuBar</string>
    </property>
   </action>
  </widget>

@@ -53,6 +53,7 @@ public slots:
     void act_saveas();
     void act_find();
     void act_newfont();
+    void act_menubar();
     void act_statusbar();
     void act_toolbar();
     void act_toolbar_style_icons_only();
