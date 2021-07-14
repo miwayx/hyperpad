@@ -41,6 +41,11 @@ int main(int argc, char *argv[])
     MainWindow mw;
 
     // Parse Arguments
+	 if(argc != 1){
+		QString file(argv[1]);
+		mw.openfile(file);
+	}
+
     QCommandLineParser parse;
     parse.setApplicationDescription("qText -Fast Text Editor");
     parse.addHelpOption();
