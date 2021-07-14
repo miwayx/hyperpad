@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(qtext4 LANGUAGES CXX)
+project(qtext LANGUAGES CXX)
 
-#set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Policy for .cc and .hh files
 cmake_policy(SET CMP0100 NEW)
@@ -18,10 +18,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Find Qt
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
-
-# Include directories for moc
-include_directories(build-Debug)
-include_directories(build)
 
 # Sources
 set(PROJECT_SOURCES
@@ -56,7 +52,7 @@ endif()
 # Install Files
 include(GNUInstallDirs)
 install(TARGETS qtext RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-install(FILES assets/applications/qtext.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
+install(FILES assets/application/qtext.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
 install(FILES CONTRIBUTING.md DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/qtext/)
 install(FILES README.md DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/qtext/)
 install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/qtext/)
