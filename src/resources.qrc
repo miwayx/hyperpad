@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/ico">
-        <file>res/qtext_ico.svg</file>
+        <file>res/qtext_ico.png</file>
     </qresource>
 </RCC>

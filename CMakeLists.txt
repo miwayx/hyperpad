@@ -56,7 +56,7 @@ install(FILES assets/application/qtext.desktop DESTINATION ${CMAKE_INSTALL_PREFI
 install(FILES CONTRIBUTING.md DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/qtext/)
 install(FILES README.md DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/qtext/)
 install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/qtext/)
-install(FILES src/res/qtext_ico.svg DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps RENAME qtext.svg)
+install(FILES src/res/qtext_ico.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps RENAME qtext.png)
 
 
 

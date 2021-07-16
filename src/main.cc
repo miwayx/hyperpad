@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     QApplication::setApplicationVersion("0.41");
     QApplication::setOrganizationName("qText");
     QApplication::setOrganizationDomain("https://github.con/ern126/qtext");
-    QApplication::setWindowIcon(QIcon::fromTheme("text-editor",QIcon(":/ico/res/qtext_ico.svg")));
+    QApplication::setWindowIcon(QIcon(":/ico/res/qtext_ico.png"));
 
     // Init
     MainWindow mw;

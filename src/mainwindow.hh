@@ -44,7 +44,7 @@ public:
     void openfile(QString filename);
     void savefile(QString filename);
 
-public slots:
+private slots:
     void act_exit();
     void act_doc_changed();
     void act_new();

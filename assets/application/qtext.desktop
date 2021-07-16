@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=qText
 Exec=qtext
-Icon=text-editor
+Icon=qtext
 Terminal=false
 Type=Application
 Categories=Utility;TextEditor

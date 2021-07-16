@@ -111,7 +111,6 @@
     <addaction name="actionCut"/>
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
-    <addaction name="actionDelete"/>
     <addaction name="separator"/>
     <addaction name="actionSelect_All"/>
     <addaction name="separator"/>
@@ -343,12 +342,18 @@
    </property>
   </action>
   <action name="actionFind">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset theme="edit-find">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Find</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionAbout_qText">
@@ -537,7 +542,7 @@
    <sender>actionDelete</sender>
    <signal>triggered()</signal>
    <receiver>plainTextEdit</receiver>
-   <slot>clear()</slot>
+   <slot>showFullScreen()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

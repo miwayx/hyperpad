@@ -36,7 +36,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setCentralWidget(ui->plainTextEdit);
-    this->setWindowIcon(QIcon(QIcon::fromTheme("text-editor",QIcon(":/ico/res/qtext_ico-svg"))));
     saved = false;
 
     // Connecting signals
@@ -88,7 +87,6 @@ void MainWindow::saveAllSettings()
     st.setValue("window/geometry",this->geometry());
     st.setValue("window/hidden_menubar", ui->menubar->isHidden());
     st.setValue("window/hidden_statusbar",ui->statusbar->isHidden());
-    //st.setValue("window/fullscreen",this->isFullScreen());
     st.setValue("toolbar/hidden",ui->toolBar->isHidden());
     st.setValue("toolbar/movable",ui->toolBar->isMovable());
     st.setValue("toolbar/geometry",ui->toolBar->geometry());
@@ -117,9 +115,6 @@ void MainWindow::readAllSettings()
 
 void MainWindow::setupToolbarAndStatusbar()
 {
-
-    // Disable find
-    ui->actionFind->setEnabled(false);
     //ui->toolBar->addAction(ui->actionFind);
     // Actions
     ui->toolBar->addAction(ui->actionNew);
@@ -131,9 +126,6 @@ void MainWindow::setupToolbarAndStatusbar()
     ui->toolBar->addAction(ui->actionCut);
     ui->toolBar->addAction(ui->actionCopy);
     ui->toolBar->addAction(ui->actionPaste);
-    ui->toolBar->addAction(ui->actionDelete);
-    ui->toolBar->addSeparator();
-    ui->toolBar->addAction(ui->actionFont);
 
     status = new QLabel;
     ui->statusbar->addWidget(status);
@@ -395,7 +387,7 @@ void MainWindow::act_about_qtext()
 {
     QMessageBox *msg = new QMessageBox(this);
     msg->setWindowTitle("About qText");
-    msg->setIconPixmap(QPixmap(QString(":/ico/res/qtext_ico.svg")));
+    msg->setIconPixmap(QPixmap(QString(":/ico/res/qtext_ico.png")));
     QString text = "Version: "+qApp->applicationVersion()+"\n"+
         "Libraries: \nQt 5.15.2 (GCC 10.2.0, 64 bit)\n"+"\n"+"(C) 2021 Ern \n"+
         qApp->organizationDomain()+"\n\nGNU General Public Licence Version 3\n";
