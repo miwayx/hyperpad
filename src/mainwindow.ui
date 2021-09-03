@@ -19,7 +19,7 @@
    <enum>Qt::DefaultContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>qText</string>
+   <string>HyperPad</string>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
@@ -86,7 +86,7 @@
      <x>0</x>
      <y>0</y>
      <width>820</width>
-     <height>21</height>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -119,7 +119,7 @@
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionAbout_qText"/>
+    <addaction name="actionAbout_Hyper"/>
     <addaction name="actionAbout_Qt"/>
    </widget>
    <widget class="QMenu" name="menuText">
@@ -356,13 +356,13 @@
     <bool>false</bool>
    </property>
   </action>
-  <action name="actionAbout_qText">
+  <action name="actionAbout_Hyper">
    <property name="icon">
     <iconset theme="help-about">
      <normaloff>:/ico/res/document-new.svg</normaloff>:/ico/res/document-new.svg</iconset>
    </property>
    <property name="text">
-    <string>About qText</string>
+    <string>About HyperPad</string>
    </property>
   </action>
   <action name="actionAbout_Qt">

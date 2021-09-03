@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setCentralWidget(ui->plainTextEdit);
-    saved = false;
+    m_saved = false;
 
     // Connecting signals
     // verify if exit of the app
@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionFind,SIGNAL(triggered(bool)),this,SLOT(act_find()));
     connect(ui->actionFont,SIGNAL(triggered(bool)),this,SLOT(act_newfont()));
     // help
-    connect(ui->actionAbout_qText,SIGNAL(triggered(bool)),this,SLOT(act_about_qtext()));
+    connect(ui->actionAbout_Hyper,SIGNAL(triggered(bool)),this,SLOT(act_about_hyper()));
     connect(ui->actionAbout_Qt,SIGNAL(triggered(bool)),qApp,SLOT(aboutQt()));
 
     // Read the configuration
@@ -163,7 +163,7 @@ void MainWindow::openfile(QString filename)
     file.close();
     // send a message to the statusbar
     status->setText("File "+filename+" open");
-    saved = false;
+    m_saved = false;
 }
 
 void MainWindow::savefile(QString filename)
@@ -183,13 +183,13 @@ void MainWindow::savefile(QString filename)
     // send a message to the statusbar
     this->setWindowTitle(filename);
     status->setText("File "+filename+" saved");
-    saved = true;
+    m_saved = true;
 }
 
 // Check for the document
 bool MainWindow::documentModified()
 {
-    if(!saved){
+    if(!m_saved){
         if(ui->plainTextEdit->document()->isModified()){
             // if the document change launch a message
             QMessageBox *msgBox = new QMessageBox(this);
@@ -234,7 +234,7 @@ void MainWindow::act_exit()
 // document changed
 void MainWindow::act_doc_changed()
 {
-    saved = false;
+    m_saved = false;
     status->setText("File "+currentfile);
     this->setWindowTitle("*"+currentfile);
 }
@@ -242,7 +242,7 @@ void MainWindow::act_doc_changed()
 // create a new file
 void MainWindow::act_new()
 {
-    if(!saved){
+    if(!m_saved){
         documentModified();
         // just clear the text and the current file
         currentfile.clear();
@@ -250,7 +250,7 @@ void MainWindow::act_new()
 
         this->setWindowTitle("untitled");
         status->setText("New file");
-        saved = false;
+        m_saved = false;
     }else{
        // just clear the text and the current file
        currentfile.clear();
@@ -258,7 +258,7 @@ void MainWindow::act_new()
 
        this->setWindowTitle("untitled");
        status->setText("New file");
-       saved = false;
+       m_saved = false;
     }
 
 }
@@ -291,7 +291,7 @@ void MainWindow::act_saveas()
 {
     QString filename;
     // Get the file
-    filename = QFileDialog::getSaveFileName(this,"Save",QDir::currentPath());
+    filename = QFileDialog::getSaveFileName(this,"Save As",QDir::currentPath());
     // currentfile now is the new file selected
     currentfile = filename;
     savefile(filename);
@@ -383,11 +383,11 @@ void MainWindow::act_toolbar_style_follow()
 }
 
 // this is the application about dialog
-void MainWindow::act_about_qtext()
+void MainWindow::act_about_hyper()
 {
     QMessageBox *msg = new QMessageBox(this);
-    msg->setWindowTitle("About qText");
-    msg->setIconPixmap(QPixmap(QString(":/ico/res/qtext_ico.png")));
+    msg->setWindowTitle("About HyperPad");
+    msg->setIconPixmap(QPixmap(QString(":/ico/res/hyperpad_ico.png")));
     QString text = "Version: "+qApp->applicationVersion()+"\n"+
         "Libraries: \nQt 5.15.2 (GCC 10.2.0, 64 bit)\n"+"\n"+"(C) 2021 Ern \n"+
         qApp->organizationDomain()+"\n\nGNU General Public Licence Version 3\n";

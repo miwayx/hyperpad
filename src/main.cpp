@@ -31,11 +31,11 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     //Application Config
-    QApplication::setApplicationName("qText");
-    QApplication::setApplicationVersion("0.41");
-    QApplication::setOrganizationName("qText");
-    QApplication::setOrganizationDomain("https://github.con/ern126/qtext");
-    QApplication::setWindowIcon(QIcon(":/ico/res/qtext_ico.png"));
+    QApplication::setApplicationName("HyperPad");
+    QApplication::setApplicationVersion("0.50");
+    QApplication::setOrganizationName("HyperPad");
+    QApplication::setOrganizationDomain("https://github.con/ern126/hyperpad");
+    QApplication::setWindowIcon(QIcon(":/ico/res/hyperpad_ico.png"));
 
     // Init
     MainWindow mw;
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 	}
 
     QCommandLineParser parse;
-    parse.setApplicationDescription("qText -Fast Text Editor");
+    parse.setApplicationDescription("HyperPad -Fast text editor");
     parse.addHelpOption();
     parse.addVersionOption();
     // file argument

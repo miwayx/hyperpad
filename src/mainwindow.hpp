@@ -61,13 +61,13 @@ private slots:
     void act_toolbar_style_text_beside_icons();
     void act_toolbar_style_text_under_icons();
     void act_toolbar_style_follow();
-    void act_about_qtext();
+    void act_about_hyper();
 
 private:
     Ui::MainWindow *ui;
     QLabel *status;
     QString currentfile;
-    bool saved;
+    bool m_saved;
     bool documentModified();
     void setupToolbarAndStatusbar();
     void saveAllSettings();

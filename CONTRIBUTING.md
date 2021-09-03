@@ -1,9 +1,9 @@
-# Contributing to qText
+# Contributing to HyperPad
 Contributors are alway welcome!
 
 All pull request will be revised
 ## Depend
-qText depend on: 
+HyperPad depend on:
 
 - qt5 (core and widgets modules)
 - cmake
