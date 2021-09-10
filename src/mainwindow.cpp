@@ -1,26 +1,22 @@
-/*
- * mainwindow.cc
- *
- * Copyright 2021 Ern <ern8642@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301, USA.
- *
- */
+/**
+ ** This file is part of the hyperpad project.
+ ** Copyright 2021 Ern <ern8642@gmail.com>.
+ **
+ ** This program is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** This program is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU General Public License for more details.
+ **
+ ** You should have received a copy of the GNU General Public License
+ ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ **/
 
-#include "mainwindow.hh"
+#include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <QFile>
@@ -51,21 +47,31 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSaveAs,SIGNAL(triggered(bool)),this,SLOT(act_saveas()));
     connect(ui->actionExit,SIGNAL(triggered(bool)),this,SLOT(act_exit()));
     // view
-    connect(ui->actionVisible_MenuBar,SIGNAL(toggled(bool)),this,SLOT(act_menubar()));
-    connect(ui->actionVisible_StatusBar,SIGNAL(toggled(bool)),this,SLOT(act_statusbar()));
-    connect(ui->actionVisible_ToolBar,SIGNAL(toggled(bool)),this,SLOT(act_toolbar()));
-    connect(ui->actionMovable_ToolBar,SIGNAL(toggled(bool)),this,SLOT(act_toolbar()));
+    connect(ui->actionVisible_MenuBar,SIGNAL(toggled(bool)),
+            this,SLOT(act_menubar()));
+    connect(ui->actionVisible_StatusBar,SIGNAL(toggled(bool)),
+            this,SLOT(act_statusbar()));
+    connect(ui->actionVisible_ToolBar,SIGNAL(toggled(bool)),
+            this,SLOT(act_toolbar()));
+    connect(ui->actionMovable_ToolBar,SIGNAL(toggled(bool)),
+            this,SLOT(act_toolbar()));
     // view toolbar style
-    connect(ui->actionToolbar_IconsOnly,SIGNAL(triggered(bool)),this,SLOT(act_toolbar_style_icons_only()));
-    connect(ui->actionToolbar_TextOnly,SIGNAL(triggered(bool)),this,SLOT(act_toolbar_style_text_only()));
-    connect(ui->actionToolbar_TextBesideIcons,SIGNAL(triggered(bool)),this,SLOT(act_toolbar_style_text_beside_icons()));
-    connect(ui->actionToolbar_TextUnderIcons,SIGNAL(triggered(bool)),this,SLOT(act_toolbar_style_text_under_icons()));
-    connect(ui->actionToolbar_Follow,SIGNAL(triggered(bool)),this,SLOT(act_toolbar_style_follow()));
+    connect(ui->actionToolbar_IconsOnly,SIGNAL(triggered(bool)),
+            this,SLOT(act_toolbar_style_icons_only()));
+    connect(ui->actionToolbar_TextOnly,SIGNAL(triggered(bool)),
+            this,SLOT(act_toolbar_style_text_only()));
+    connect(ui->actionToolbar_TextBesideIcons,SIGNAL(triggered(bool)),
+            this,SLOT(act_toolbar_style_text_beside_icons()));
+    connect(ui->actionToolbar_TextUnderIcons,SIGNAL(triggered(bool)),
+            this,SLOT(act_toolbar_style_text_under_icons()));
+    connect(ui->actionToolbar_Follow,SIGNAL(triggered(bool)),
+            this,SLOT(act_toolbar_style_follow()));
     // text
     connect(ui->actionFind,SIGNAL(triggered(bool)),this,SLOT(act_find()));
     connect(ui->actionFont,SIGNAL(triggered(bool)),this,SLOT(act_newfont()));
     // help
-    connect(ui->actionAbout_Hyper,SIGNAL(triggered(bool)),this,SLOT(act_about_hyper()));
+    connect(ui->actionAbout_Hyper,SIGNAL(triggered(bool)),
+            this,SLOT(act_about_hyper()));
     connect(ui->actionAbout_Qt,SIGNAL(triggered(bool)),qApp,SLOT(aboutQt()));
 
     // Read the configuration
@@ -149,8 +155,6 @@ void MainWindow::openfile(QString filename)
     currentfile = filename;
     QFile file(filename);
     if(!file.open(QIODevice::ReadOnly | QFile::Text)){
-
-        //QMessageBox::warning(this,"Cannot open the file",file.errorString());
         status->setText("Cannot open the file "+file.errorString());
         return;
     }
@@ -171,7 +175,6 @@ void MainWindow::savefile(QString filename)
     QFile file(filename);
     if(!file.open(QIODevice::WriteOnly | QFile::Text)){
         // Launch a message error
-        //QMessageBox::warning(this,"Cannot save the file",file.errorString());
         status->setText("Cannot save the file "+file.errorString());
         return;
     }
@@ -193,7 +196,6 @@ bool MainWindow::documentModified()
         if(ui->plainTextEdit->document()->isModified()){
             // if the document change launch a message
             QMessageBox *msgBox = new QMessageBox(this);
-            //msgBox->setModal(true);
             msgBox->setText("The document has been modified.");
             msgBox->setInformativeText("Do you want to save your changes?");
             msgBox->setStandardButtons(QMessageBox::Save | QMessageBox::Discard);
@@ -270,6 +272,7 @@ void MainWindow::act_open()
     QString filename = QFileDialog::getOpenFileName(this,"Open a file");
     openfile(filename);
 }
+
 // save a file
 void MainWindow::act_save()
 {
@@ -341,6 +344,7 @@ void MainWindow::act_statusbar()
         ui->statusbar->setVisible(false);
     }
 }
+
 // get the state of the toolbar actions
 void MainWindow::act_toolbar()
 {
@@ -357,6 +361,7 @@ void MainWindow::act_toolbar()
         ui->toolBar->setMovable(false);
     }
 }
+
 // style of the toolbar icons and text action
 void MainWindow::act_toolbar_style_icons_only()
 {
@@ -377,6 +382,7 @@ void MainWindow::act_toolbar_style_text_under_icons()
 {
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 }
+
 void MainWindow::act_toolbar_style_follow()
 {
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
@@ -387,7 +393,7 @@ void MainWindow::act_about_hyper()
 {
     QMessageBox *msg = new QMessageBox(this);
     msg->setWindowTitle("About HyperPad");
-    msg->setIconPixmap(QPixmap(QString(":/ico/res/hyperpad_ico.png")));
+    msg->setIconPixmap(QPixmap(QString(":/ico/res/hyper_ico.png")));
     QString text = "Version: "+qApp->applicationVersion()+"\n"+
         "Libraries: \nQt 5.15.2 (GCC 10.2.0, 64 bit)\n"+"\n"+"(C) 2021 Ern \n"+
         qApp->organizationDomain()+"\n\nGNU General Public Licence Version 3\n";
