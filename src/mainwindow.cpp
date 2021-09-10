@@ -36,42 +36,42 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Connecting signals
     // verify if exit of the app
-    connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(act_exit()));
+    connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(actExit()));
     // document changed
-    connect(ui->plainTextEdit,SIGNAL(textChanged()),this,SLOT(act_doc_changed()));
+    connect(ui->plainTextEdit,SIGNAL(textChanged()),this,SLOT(actDocChanged()));
     // MenuBar
     // file
-    connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(act_new()));
-    connect(ui->actionOpen,SIGNAL(triggered(bool)),this,SLOT(act_open()));
-    connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(act_save()));
-    connect(ui->actionSaveAs,SIGNAL(triggered(bool)),this,SLOT(act_saveas()));
-    connect(ui->actionExit,SIGNAL(triggered(bool)),this,SLOT(act_exit()));
+    connect(ui->actionNew,SIGNAL(triggered(bool)),this,SLOT(actNew()));
+    connect(ui->actionOpen,SIGNAL(triggered(bool)),this,SLOT(actOpen()));
+    connect(ui->actionSave,SIGNAL(triggered(bool)),this,SLOT(actSave()));
+    connect(ui->actionSaveAs,SIGNAL(triggered(bool)),this,SLOT(actSaveas()));
+    connect(ui->actionExit,SIGNAL(triggered(bool)),this,SLOT(actExit()));
     // view
     connect(ui->actionVisible_MenuBar,SIGNAL(toggled(bool)),
-            this,SLOT(act_menubar()));
+            this,SLOT(actMenubar()));
     connect(ui->actionVisible_StatusBar,SIGNAL(toggled(bool)),
-            this,SLOT(act_statusbar()));
+            this,SLOT(actStatusbar()));
     connect(ui->actionVisible_ToolBar,SIGNAL(toggled(bool)),
-            this,SLOT(act_toolbar()));
+            this,SLOT(actToolbar()));
     connect(ui->actionMovable_ToolBar,SIGNAL(toggled(bool)),
-            this,SLOT(act_toolbar()));
+            this,SLOT(actToolbar()));
     // view toolbar style
     connect(ui->actionToolbar_IconsOnly,SIGNAL(triggered(bool)),
-            this,SLOT(act_toolbar_style_icons_only()));
+            this,SLOT(actToolbarStyleIconsOnly()));
     connect(ui->actionToolbar_TextOnly,SIGNAL(triggered(bool)),
-            this,SLOT(act_toolbar_style_text_only()));
+            this,SLOT(actToolbarStyleTextOnly()));
     connect(ui->actionToolbar_TextBesideIcons,SIGNAL(triggered(bool)),
-            this,SLOT(act_toolbar_style_text_beside_icons()));
+            this,SLOT(actToolbarStyleTextBesideIcons()));
     connect(ui->actionToolbar_TextUnderIcons,SIGNAL(triggered(bool)),
-            this,SLOT(act_toolbar_style_text_under_icons()));
+            this,SLOT(actToolbarStyleTextUnderIcons()));
     connect(ui->actionToolbar_Follow,SIGNAL(triggered(bool)),
-            this,SLOT(act_toolbar_style_follow()));
+            this,SLOT(actToolbarStyleFollow()));
     // text
-    connect(ui->actionFind,SIGNAL(triggered(bool)),this,SLOT(act_find()));
-    connect(ui->actionFont,SIGNAL(triggered(bool)),this,SLOT(act_newfont()));
+    connect(ui->actionFind,SIGNAL(triggered(bool)),this,SLOT(actFind()));
+    connect(ui->actionFont,SIGNAL(triggered(bool)),this,SLOT(actNewfont()));
     // help
     connect(ui->actionAbout_Hyper,SIGNAL(triggered(bool)),
-            this,SLOT(act_about_hyper()));
+            this,SLOT(actAboutHyper()));
     connect(ui->actionAbout_Qt,SIGNAL(triggered(bool)),qApp,SLOT(aboutQt()));
 
     // Read the configuration
@@ -207,7 +207,7 @@ bool MainWindow::documentModified()
             // This case save the file and the preferences
             case QMessageBox::Save:
                 // Save the file and all settings
-                act_save();
+                actSave();
                 saveAllSettings();
                 return true;
             case QMessageBox::Discard:
@@ -224,7 +224,7 @@ bool MainWindow::documentModified()
 }
 
 //Actions
-void MainWindow::act_exit()
+void MainWindow::actExit()
 {
     if(!documentModified()){
         // save the preferences
@@ -234,7 +234,7 @@ void MainWindow::act_exit()
 }
 
 // document changed
-void MainWindow::act_doc_changed()
+void MainWindow::actDocChanged()
 {
     m_saved = false;
     status->setText("File "+currentfile);
@@ -242,7 +242,7 @@ void MainWindow::act_doc_changed()
 }
 
 // create a new file
-void MainWindow::act_new()
+void MainWindow::actNew()
 {
     if(!m_saved){
         documentModified();
@@ -266,7 +266,7 @@ void MainWindow::act_new()
 }
 
 // open a file with dialog
-void MainWindow::act_open()
+void MainWindow::actOpen()
 {
     // Get the filename to open
     QString filename = QFileDialog::getOpenFileName(this,"Open a file");
@@ -274,7 +274,7 @@ void MainWindow::act_open()
 }
 
 // save a file
-void MainWindow::act_save()
+void MainWindow::actSave()
 {
     // Verify for the current file, if empty launch a dialog for save the file
     QString filename;
@@ -290,7 +290,7 @@ void MainWindow::act_save()
 }
 
 // save as
-void MainWindow::act_saveas()
+void MainWindow::actSaveas()
 {
     QString filename;
     // Get the file
@@ -301,7 +301,7 @@ void MainWindow::act_saveas()
 }
 
 // find a text
-void MainWindow::act_find()
+void MainWindow::actFind()
 {
     // Get the thext to find
     // **WARNING** This method is incomplete
@@ -310,7 +310,7 @@ void MainWindow::act_find()
 }
 
 // felect a new Font
-void MainWindow::act_newfont()
+void MainWindow::actNewfont()
 {
     // This launch te font dialog and verify this, if all is ok, set the font
     bool ok;
@@ -325,7 +325,7 @@ void MainWindow::act_newfont()
 }
 
 // get the state of the menubar action
-void MainWindow::act_menubar()
+void MainWindow::actMenubar()
 {
    if(ui->actionVisible_MenuBar->isChecked()==true){
        ui->menubar->setVisible(true);
@@ -335,7 +335,7 @@ void MainWindow::act_menubar()
 }
 
 // get the state of the statusbar actions
-void MainWindow::act_statusbar()
+void MainWindow::actStatusbar()
 {
     // If the signal toggle emit true the action is marcked
     if(ui->actionVisible_StatusBar->isChecked()==true){
@@ -346,7 +346,7 @@ void MainWindow::act_statusbar()
 }
 
 // get the state of the toolbar actions
-void MainWindow::act_toolbar()
+void MainWindow::actToolbar()
 {
     // is visible
     if(ui->actionVisible_ToolBar->isChecked()==true){
@@ -363,33 +363,33 @@ void MainWindow::act_toolbar()
 }
 
 // style of the toolbar icons and text action
-void MainWindow::act_toolbar_style_icons_only()
+void MainWindow::actToolbarStyleIconsOnly()
 {
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 }
 
-void MainWindow::act_toolbar_style_text_only()
+void MainWindow::actToolbarStyleTextOnly()
 {
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
 }
 
-void MainWindow::act_toolbar_style_text_beside_icons()
+void MainWindow::actToolbarStyleTextBesideIcons()
 {
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 }
 
-void MainWindow::act_toolbar_style_text_under_icons()
+void MainWindow::actToolbarStyleTextUnderIcons()
 {
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 }
 
-void MainWindow::act_toolbar_style_follow()
+void MainWindow::actToolbarStyleFollow()
 {
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
 }
 
 // this is the application about dialog
-void MainWindow::act_about_hyper()
+void MainWindow::actAboutHyper()
 {
     QMessageBox *msg = new QMessageBox(this);
     msg->setWindowTitle("About HyperPad");

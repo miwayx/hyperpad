@@ -40,23 +40,23 @@ public:
     void savefile(QString filename);
 
 private slots:
-    void act_exit();
-    void act_doc_changed();
-    void act_new();
-    void act_open();
-    void act_save();
-    void act_saveas();
-    void act_find();
-    void act_newfont();
-    void act_menubar();
-    void act_statusbar();
-    void act_toolbar();
-    void act_toolbar_style_icons_only();
-    void act_toolbar_style_text_only();
-    void act_toolbar_style_text_beside_icons();
-    void act_toolbar_style_text_under_icons();
-    void act_toolbar_style_follow();
-    void act_about_hyper();
+    void actExit();
+    void actDocChanged();
+    void actNew();
+    void actOpen();
+    void actSave();
+    void actSaveas();
+    void actFind();
+    void actNewfont();
+    void actMenubar();
+    void actStatusbar();
+    void actToolbar();
+    void actToolbarStyleIconsOnly();
+    void actToolbarStyleTextOnly();
+    void actToolbarStyleTextBesideIcons();
+    void actToolbarStyleTextUnderIcons();
+    void actToolbarStyleFollow();
+    void actAboutHyper();
 
 private:
     Ui::MainWindow *ui;
