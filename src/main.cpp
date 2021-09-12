@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     QApplication::setApplicationName("HyperPad");
     QApplication::setApplicationVersion("0.50");
     QApplication::setOrganizationName("HyperPad");
-    QApplication::setOrganizationDomain("https://github.con/ern126/hyperpad");
+    QApplication::setOrganizationDomain("https://github.con/ern123/hyperpad");
     QApplication::setWindowIcon(QIcon(":/ico/res/hyperpad_ico.png"));
 
     // Init
