@@ -16,12 +16,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
-# Sources
-set(PROJECT_SOURCES
-    src/main.cpp
-    src/mainwindow.cpp
-    src/mainwindow.hpp
-)
 # Ui Files
 qt_wrap_ui(PROJECT_SOURCES
     src/mainwindow.ui
@@ -33,10 +27,21 @@ qt_add_resources(PROJECT_SOURCES
 
 # Executable
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(hyperpad MANUAL_FINALIZATION ${PROJECT_SOURCES})
+    qt_add_executable(hyperpad MANUAL_FINALIZATION)
 else()
-    add_executable(hyperpad ${PROJECT_SOURCES})
+    add_executable(hyperpad)
 endif()
+
+# Sources
+target_sources(
+    # Sources
+    PRIVATE
+    src/main.cpp
+    src/mainwindow.cpp
+    # Headers
+    PUBLIC
+    src/mainwindow.hpp
+)
 
 # Link
 target_link_libraries(hyperpad PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
