@@ -17,6 +17,7 @@
  **/
 
 #include "mainwindow.hpp"
+#include "version.h"
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
@@ -27,7 +28,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     //Application Config
     QApplication::setApplicationName("HyperPad");
-    QApplication::setApplicationVersion("0.50");
+    QApplication::setApplicationVersion(HYPER_VERSION);
     QApplication::setOrganizationName("HyperPad");
     QApplication::setOrganizationDomain("https://github.con/ern123/hyperpad");
     QApplication::setWindowIcon(QIcon(":/ico/res/hyperpad_ico.png"));

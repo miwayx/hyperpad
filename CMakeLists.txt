@@ -1,8 +1,14 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(hyperpad LANGUAGES CXX)
+project(hyperpad LANGUAGES CXX VERSION 0.50)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+# Version Configure
+configure_file (
+    "src/version.h.in"
+    "version.h"
+)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -16,15 +22,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
-# Ui Files
-qt_wrap_ui(PROJECT_SOURCES
-    src/mainwindow.ui
-)
-# Resources Files
-qt_add_resources(PROJECT_SOURCES
-    src/resources.qrc
-)
-
 # Executable
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(hyperpad MANUAL_FINALIZATION)
@@ -33,14 +30,19 @@ else()
 endif()
 
 # Sources
-target_sources(
+cmake_policy(SET CMP0076 NEW)
+target_sources(hyperpad
+    # Headers
+    PUBLIC
+    src/mainwindow.hpp
     # Sources
     PRIVATE
     src/main.cpp
     src/mainwindow.cpp
-    # Headers
-    PUBLIC
-    src/mainwindow.hpp
+    # UI Files
+    src/mainwindow.ui
+    # Resources
+    src/resources.qrc
 )
 
 # Link
