@@ -60,7 +60,7 @@ install(FILES assets/application/hyperpad.desktop DESTINATION ${CMAKE_INSTALL_PR
 install(FILES CONTRIBUTING.md DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/hyperpad/)
 install(FILES README.md DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/hyperpad/)
 install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/hyperpad/)
-install(FILES src/res/hyperpad_ico.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps RENAME hyperpad.png)
+install(FILES src/res/hyper_ico.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps RENAME hyperpad.png)
 
 
 
