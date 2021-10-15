@@ -1,3 +1,6 @@
 build-Debug
+build
 CMakeLists.txt.user
+src/version.hpp
+
 
