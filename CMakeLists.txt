@@ -41,15 +41,15 @@ if(QT_VERSION_MAJOR EQUAL 6)
 endif()
 
 # Install Files only on GNU/Linux
-if(UNIX AND NOT APPLE)
+#if(UNIX AND NOT APPLE)
     #include(GNUInstallDirs)
-    install(TARGETS hyperpad RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-    install(FILES assets/application/hyperpad.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
-    install(FILES CONTRIBUTING.md DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/hyperpad/)
-    install(FILES README.md DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/hyperpad/)
-    install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/hyperpad/)
-    install(FILES src/res/hyper_ico.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps RENAME hyperpad.png)
-endif()
+#    install(TARGETS hyperpad RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+#    install(FILES assets/application/hyperpad.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
+#    install(FILES CONTRIBUTING.md DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/hyperpad/)
+#    install(FILES README.md DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/hyperpad/)
+#    install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/hyperpad/)
+#    install(FILES src/res/hyper_ico.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps RENAME hyperpad.png)
+#endif()
 
 
 
