@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 
 project(hyperpad VERSION 0.50)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 # Version configuration
 configure_file (
     "${CMAKE_SOURCE_DIR}/src/version.hpp.in"

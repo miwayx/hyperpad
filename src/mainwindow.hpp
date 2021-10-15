@@ -16,4 +16,61 @@
  ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
+#ifndef HYPER_MAINWINDOW_HPP
+#define HYPER_MAINWINDOW_HPP
+
+#include <QMainWindow>
+#include <QSettings>
+
+#include "ui_mainwindow.h"
+#include "file.hpp"
+
+namespace file = hyper::file;
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class MainWindow; }
+QT_END_NAMESPACE
+
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+    // Application settings
+    QSettings *st;
+
+// onActions
+public slots:
+    void onActionOpen();
+
+private slots:
+    void onActionExit();
+    void onActionDocumentChanged();
+    void onActionNew();
+    void onActionSave();
+    void onActionSaveAs();
+    void onActionMenubar();
+    void onActionStatusbar();
+    void onActionToolbar();
+    void onActionToolbarStyleIconsOnly();
+    void onActionToolbarStyleTextOnly();
+    void onActionToolbarStyleTextBesideIcons();
+    void onActionToolbarStyleTextUnderIcons();
+    void onActionToolbarStyleFollow();
+    void onActionAboutHyper();
+
+private:
+    Ui::MainWindow *ui;
+    // Current file
+    file::File *_currentfile;
+    bool documentModified();
+    void setupToolbar();
+    // Store and Load default settings
+    void storeSettings();
+    void loadSettings();
+};
+
+#endif // HYPER_MAINWINDOW_HPP
 

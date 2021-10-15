@@ -1,3 +1,5 @@
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
 # Find Qt
 find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
@@ -21,7 +23,6 @@ target_sources(hyperpad
     main.cpp
     mainwindow.cpp
     file.cpp
-
-    # UI Files
-    ui/mainwindow.ui
+    # UI files
+    mainwindow.ui
 )
