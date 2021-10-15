@@ -18,27 +18,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find Qt
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
-
-# Executable
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(hyperpad MANUAL_FINALIZATION)
-else()
-    add_executable(hyperpad)
-endif()
-
-# Sources
-include_directories(src)
-
-# Link
-target_link_libraries(hyperpad PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-
-
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(hyperpad)
-endif()
+# Source configuration
+add_subdirectory(src)
 
 # Install Files only on GNU/Linux
 #if(UNIX AND NOT APPLE)
