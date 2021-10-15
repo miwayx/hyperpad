@@ -19,11 +19,13 @@ endif()
 # Sources
 target_sources(hyperpad
     # Headers
-    #PUBLIC
+    PUBLIC
+    mainwindow.hpp
 
     # Sources
     PRIVATE
     main.cpp
+    mainwindow.cpp
 
     # UI Files
 
