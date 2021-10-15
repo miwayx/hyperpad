@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(hyperpad LANGUAGES CXX VERSION 0.50)
+project(hyperpad VERSION 0.50)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-# Version Configure
+# Version configuration
 configure_file (
-    "src/version.h.in"
-    "version.h"
+    "${CMAKE_SOURCE_DIR}/src/version.hpp.in"
+    "${CMAKE_SOURCE_DIR}/src/version.hpp"
 )
 
 set(CMAKE_AUTOUIC ON)
@@ -15,7 +15,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 # C++ Standard
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find Qt
@@ -30,20 +30,7 @@ else()
 endif()
 
 # Sources
-cmake_policy(SET CMP0076 NEW)
-target_sources(hyperpad
-    # Headers
-    PUBLIC
-    src/mainwindow.hpp
-    # Sources
-    PRIVATE
-    src/main.cpp
-    src/mainwindow.cpp
-    # UI Files
-    src/mainwindow.ui
-    # Resources
-    src/resources.qrc
-)
+include(src)
 
 # Link
 target_link_libraries(hyperpad PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
