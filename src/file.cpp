@@ -44,6 +44,11 @@ File::~File()
     }
 }
 
+void File::setFilename(std::string name)
+{
+    _filename = name;
+}
+
 bool File::openFile()
 {
     try {

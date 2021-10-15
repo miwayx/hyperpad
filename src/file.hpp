@@ -33,6 +33,8 @@ public:
     File(std::string filename);
     File(QString filename);
     ~File();
+    /// Set a new filename
+    void setFilename(std::string name);
     /// Open a file in the filesystem
     bool openFile();
     /// Save the current file
