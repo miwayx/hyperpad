@@ -43,7 +43,7 @@ public:
     // Application settings
     QSettings st;
 
-// onActions
+// Actions
 //public slots:
 //    void onActionOpen();
 
@@ -68,7 +68,7 @@ private:
     // Current file
     file::File *_currentfile;
     // Main text editor
-    //text::TextEditor *_texteditor;
+    text::TextEditor *_texteditor;
     //bool documentModified();
     void setupToolbar();
     // Store and Load default settings

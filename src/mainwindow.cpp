@@ -23,8 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     // Initialize Text Editor
-    //_texteditor = new text::TextEditor(this);
-    //this->setCentralWidget(_texteditor);
+    _texteditor = new text::TextEditor(this);
+    this->setCentralWidget(_texteditor);
 
 //    // Connecting signals
 //    // verify if exit of the app
@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    //delete _texteditor;
+    delete _texteditor;
     delete _currentfile;
 }
 
