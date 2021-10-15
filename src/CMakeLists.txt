@@ -23,5 +23,5 @@ target_sources(hyperpad
     file.cpp
 
     # UI Files
-
+    ui/mainwindow.ui
 )
