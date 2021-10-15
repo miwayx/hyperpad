@@ -24,8 +24,10 @@
 
 #include "ui_mainwindow.h"
 #include "file.hpp"
+#include "texteditor.hpp"
 
 namespace file = hyper::file;
+namespace text = hyper::text;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -39,33 +41,35 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     // Application settings
-    QSettings *st;
+    QSettings st;
 
 // onActions
-public slots:
-    void onActionOpen();
+//public slots:
+//    void onActionOpen();
 
-private slots:
-    void onActionExit();
-    void onActionDocumentChanged();
-    void onActionNew();
-    void onActionSave();
-    void onActionSaveAs();
-    void onActionMenubar();
-    void onActionStatusbar();
-    void onActionToolbar();
-    void onActionToolbarStyleIconsOnly();
-    void onActionToolbarStyleTextOnly();
-    void onActionToolbarStyleTextBesideIcons();
-    void onActionToolbarStyleTextUnderIcons();
-    void onActionToolbarStyleFollow();
-    void onActionAboutHyper();
+//private slots:
+//    void onActionExit();
+//    void onActionDocumentChanged();
+//    void onActionNew();
+//    void onActionSave();
+//    void onActionSaveAs();
+//    void onActionMenubar();
+//    void onActionStatusbar();
+//    void onActionToolbar();
+//    void onActionToolbarStyleIconsOnly();
+//    void onActionToolbarStyleTextOnly();
+//    void onActionToolbarStyleTextBesideIcons();
+//    void onActionToolbarStyleTextUnderIcons();
+//    void onActionToolbarStyleFollow();
+//    void onActionAboutHyper();
 
 private:
     Ui::MainWindow *ui;
     // Current file
     file::File *_currentfile;
-    bool documentModified();
+    // Main text editor
+    //text::TextEditor *_texteditor;
+    //bool documentModified();
     void setupToolbar();
     // Store and Load default settings
     void storeSettings();
