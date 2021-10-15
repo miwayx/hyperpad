@@ -66,7 +66,7 @@
      <x>0</x>
      <y>0</y>
      <width>820</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -102,12 +102,6 @@
     <addaction name="actionAbout_Hyper"/>
     <addaction name="actionAbout_Qt"/>
    </widget>
-   <widget class="QMenu" name="menuText">
-    <property name="title">
-     <string>Text</string>
-    </property>
-    <addaction name="actionFont"/>
-   </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
      <string>View</string>
@@ -140,7 +134,6 @@
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
-   <addaction name="menuText"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionNew">
@@ -336,15 +329,6 @@
    </property>
    <property name="text">
     <string>About Qt</string>
-   </property>
-  </action>
-  <action name="actionFont">
-   <property name="icon">
-    <iconset theme="font-enable">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
-   <property name="text">
-    <string>Font</string>
    </property>
   </action>
   <action name="actionMovable_ToolBar">
