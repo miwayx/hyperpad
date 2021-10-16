@@ -60,7 +60,7 @@ private slots:
     void onActionToolbarStyleTextBesideIcons();
     void onActionToolbarStyleTextUnderIcons();
     void onActionToolbarStyleFollow();
-//    void onActionAboutHyper();
+    void onActionAboutHyper();
 
 private:
     Ui::MainWindow *ui;

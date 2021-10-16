@@ -54,10 +54,9 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT(onActionToolbarStyleTextUnderIcons()));
     connect(ui->actionToolbar_Follow, SIGNAL(triggered(bool)),
             this, SLOT(onActionToolbarStyleFollow()));
-//    connect(ui->actionFont, SIGNAL(triggered(bool)),this, SLOT(onActionNewfont()));
-//    connect(ui->actionAbout_Hyper, SIGNAL(triggered(bool)),
-//            this, SLOT(onactionAboutHyper()));
-//    connect(ui->actionAbout_Qt, SIGNAL(triggered(bool)), qApp, SLOT(aboutQt()));
+    connect(ui->actionAbout_Hyper, SIGNAL(triggered(bool)),
+            this, SLOT(onActionAboutHyper()));
+    connect(ui->actionAbout_Qt, SIGNAL(triggered(bool)), qApp, SLOT(aboutQt()));
 
     // Read the configuration
     this->loadSettings();
@@ -271,6 +270,26 @@ void MainWindow::onActionToolbarStyleTextUnderIcons()
 void MainWindow::onActionToolbarStyleFollow()
 {
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
+}
+
+void MainWindow::onActionAboutHyper()
+{
+    QMessageBox *msg = new QMessageBox(this);
+    msg->setWindowTitle("About HyperPad");
+    msg->setIconPixmap(QPixmap(QString(":/ico/res/hyper_ico.png")));
+    QString text =
+       // Version and libs
+      "Version: " + qApp->applicationVersion() +
+      "\nLibraries:\n" +
+        "Qt 5.15.2 (GCC 10.2.0, 64 bit)\n" +
+      // Author
+      "Authors:\n" +
+        "(C) 2021 Ernest C. Suarez <ernestcsuarez@gmail.com>\n" +
+      // Licence
+      "\nLicence: GNU General Public Licence Version 3\n" +
+        qApp->organizationDomain();
+    msg->setText(text);
+    msg->exec();
 }
 
 
