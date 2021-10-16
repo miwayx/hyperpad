@@ -78,5 +78,14 @@ bool currentFile::save(QString text)
     }
 }
 
+bool currentFile::isEmpty()
+{
+    // check if empty the string
+    if(_cfilename.isEmpty())
+        return true;
+    else
+        return false;
+}
+
 
 } // namespace hyper

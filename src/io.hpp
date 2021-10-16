@@ -62,6 +62,8 @@ public:
     QString name() {
         return _cfilename;
     }
+    // Return true if empty
+    bool isEmpty();
 private:
     // Name of the current file opened
     QString _cfilename;
