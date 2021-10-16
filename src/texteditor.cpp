@@ -18,7 +18,7 @@
 
 #include "texteditor.hpp"
 
-namespace hyper::text {
+namespace hyper {
 
 TextEditor::TextEditor(QWidget *parent) : QTextEdit(parent)
 {
@@ -27,4 +27,4 @@ TextEditor::TextEditor(QWidget *parent) : QTextEdit(parent)
 
 
 
-} // namespace hyper::text
+} // namespace hyper
