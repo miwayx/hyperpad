@@ -28,14 +28,14 @@ MainWindow::MainWindow(QWidget *parent)
 
 //    // Connecting signals
 //    // verify if exit of the app
-//    connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onActionExit()));
+    connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onActionExit()));
     connect(_texteditor, SIGNAL(textChanged()), this,
             SLOT(onActionDocumentChanged()));
     connect(ui->actionNew, SIGNAL(triggered(bool)),  this, SLOT(onActionNew()));
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(onActionOpen()));
     connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(onActionSave()));
     connect(ui->actionSaveAs,SIGNAL(triggered(bool)), this, SLOT(onActionSaveas()));
-//    connect(ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(onActionExit()));
+    connect(ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(onActionExit()));
     connect(ui->actionVisible_MenuBar, SIGNAL(toggled(bool)),
             this, SLOT(onActionMenubar()));
 //    connect(ui->actionVisible_StatusBar, SIGNAL(toggled(bool)),
@@ -160,6 +160,15 @@ void MainWindow::onActionOpen()
     this->setWindowTitle(_currentfile.name());
     // Read text and put in Text Editor
     _texteditor->setText(_currentfile.read());
+}
+
+void MainWindow::onActionExit()
+{
+    if(!documentModified()){
+        // Save the preferences
+        storeSettings();
+        qApp->quit();
+    }
 }
 
 void MainWindow::onActionDocumentChanged()

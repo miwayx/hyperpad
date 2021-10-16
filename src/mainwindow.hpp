@@ -47,7 +47,7 @@ public slots:
     void onActionOpen();
 
 private slots:
-//    void onActionExit();
+    void onActionExit();
     void onActionDocumentChanged();
     void onActionNew();
     void onActionSave();
