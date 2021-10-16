@@ -43,27 +43,23 @@ public:
     currentFile(QString filename);
     ~currentFile(){};
     /// Set a filename
-    void setFilename(QString filename) {
-        _cfilename = filename;
-    }
+    void setFilename(QString filename);
     /// Set saved the file
-    void setSaved(bool op) {
-        _is_saved = op;
-    }
+    void setSaved(bool op);
     /// Return if the current file is saved
-    bool isSaved() {
-        return _is_saved;
-    }
+    bool isSaved();
     /// Read file context
     QString read();
     /// Save text in the file
     bool save(QString text);
     /// Return the filename
-    QString name() {
-        return _cfilename;
-    }
+    QString name();
     // Return true if empty
     bool isEmpty();
+    // implemented operator "=" for assign a new name
+    /// Assign a new name
+    void operator=(QString name);
+
 private:
     // Name of the current file opened
     QString _cfilename;

@@ -61,6 +61,20 @@ currentFile::currentFile(QString filename)
     _is_saved = false;
 }
 
+void currentFile::setFilename(QString filename) {
+    _cfilename = filename;
+    // set is_saved false
+    _is_saved = false;
+}
+
+void currentFile::setSaved(bool op) {
+    _is_saved = op;
+}
+
+bool currentFile::isSaved() {
+    return _is_saved;
+}
+
 QString currentFile::read()
 {
     return io::readFile(_cfilename);
@@ -78,6 +92,11 @@ bool currentFile::save(QString text)
     }
 }
 
+QString currentFile::name()
+{
+    return _cfilename;
+}
+
 bool currentFile::isEmpty()
 {
     // check if empty the string
@@ -85,6 +104,10 @@ bool currentFile::isEmpty()
         return true;
     else
         return false;
+}
+
+void currentFile::operator=(QString name){
+    this->setFilename(name);
 }
 
 
