@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     // Initialize Text Editor
-    _texteditor = new text::TextEditor(this);
+    _texteditor = new hyper::TextEditor(this);
     this->setCentralWidget(_texteditor);
 
 //    // Connecting signals
@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
 //    connect(_texteditor, SIGNAL(textChanged()), this,
 //            SLOT(onActionDocumentChanged()));
 //    connect(ui->actionNew, SIGNAL(triggered(bool)),  this, SLOT(onActionNew()));
-//    connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(onActionOpen()));
+    connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(onActionOpen()));
 //    connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(onActionSave()));
 //    connect(ui->actionSaveAs,SIGNAL(triggered(bool)), this, SLOT(onActionSaveas()));
 //    connect(ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(onActionExit()));
@@ -69,7 +69,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete _texteditor;
-    delete _currentfile;
 }
 
 void MainWindow::storeSettings()
@@ -119,4 +118,14 @@ void MainWindow::setupToolbar()
         ui->actionVisible_ToolBar->setChecked(true);
     if(ui->statusbar->isHidden() == false)
         ui->actionVisible_StatusBar->setChecked(true);
+}
+
+void MainWindow::onActionOpen()
+{
+    QString file = QFileDialog::getOpenFileName(this, "Open a file");
+    _currentfile.setFilename(file);
+    // Set new window title
+    this->setWindowTitle(_currentfile.name());
+    // Read text and put in Text Editor
+    _texteditor->setText(_currentfile.read());
 }

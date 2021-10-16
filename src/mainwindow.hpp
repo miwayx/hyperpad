@@ -21,13 +21,12 @@
 
 #include <QMainWindow>
 #include <QSettings>
+#include <QMessageBox>
+#include <QFileDialog>
 
 #include "ui_mainwindow.h"
-#include "file.hpp"
+#include "io.hpp"
 #include "texteditor.hpp"
-
-namespace file = hyper::file;
-namespace text = hyper::text;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -44,8 +43,8 @@ public:
     QSettings st;
 
 // Actions
-//public slots:
-//    void onActionOpen();
+public slots:
+    void onActionOpen();
 
 //private slots:
 //    void onActionExit();
@@ -66,9 +65,9 @@ public:
 private:
     Ui::MainWindow *ui;
     // Current file
-    file::File *_currentfile;
+    hyper::currentFile _currentfile;
     // Main text editor
-    text::TextEditor *_texteditor;
+    hyper::TextEditor *_texteditor;
     //bool documentModified();
     void setupToolbar();
     // Store and Load default settings
