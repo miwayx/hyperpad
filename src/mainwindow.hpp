@@ -48,7 +48,7 @@ public slots:
 
 private slots:
 //    void onActionExit();
-//    void onActionDocumentChanged();
+    void onActionDocumentChanged();
 //    void onActionNew();
     void onActionSave();
     void onActionSaveAs();
@@ -68,7 +68,7 @@ private:
     hyper::currentFile _currentfile;
     // Main text editor
     hyper::TextEditor *_texteditor;
-    //bool documentModified();
+    bool documentModified();
     void setupToolbar();
     // Store and Load default settings
     void storeSettings();

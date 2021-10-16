@@ -29,8 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
 //    // Connecting signals
 //    // verify if exit of the app
 //    connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onActionExit()));
-//    connect(_texteditor, SIGNAL(textChanged()), this,
-//            SLOT(onActionDocumentChanged()));
+    connect(_texteditor, SIGNAL(textChanged()), this,
+            SLOT(onActionDocumentChanged()));
 //    connect(ui->actionNew, SIGNAL(triggered(bool)),  this, SLOT(onActionNew()));
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(onActionOpen()));
     connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(onActionSave()));
@@ -96,6 +96,38 @@ void MainWindow::loadSettings()
         st.value("toolbar/style").value<Qt::ToolButtonStyle>());
 }
 
+bool MainWindow::documentModified()
+{
+    if(!_currentfile.isSaved()){
+        if(_texteditor->document()->isModified()){
+            // If the document change launch a message
+            QMessageBox *msgBox = new QMessageBox(this);
+            msgBox->setText("The document has been modified.");
+            msgBox->setInformativeText("Do you want to save your changes?");
+            msgBox->setStandardButtons(QMessageBox::Save |
+                                       QMessageBox::Discard);
+            msgBox->setDefaultButton(QMessageBox::Save);
+            int return_code = msgBox->exec();
+            switch(return_code)
+            {
+            // Save the file and the preferences
+            case QMessageBox::Save:
+                onActionSave();
+                storeSettings();
+                return true;
+            case QMessageBox::Discard:
+                return false;
+            default:
+                return false;
+            }
+        }else{
+            return false;
+        }
+        return false;
+    }
+    return true;
+}
+
 void MainWindow::setupToolbar()
 {
     // Actions
@@ -128,6 +160,13 @@ void MainWindow::onActionOpen()
     this->setWindowTitle(_currentfile.name());
     // Read text and put in Text Editor
     _texteditor->setText(_currentfile.read());
+}
+
+void MainWindow::onActionDocumentChanged()
+{
+    // Set currentFile not saved
+    _currentfile.setSaved(false);
+    this->setWindowTitle("*" + _currentfile.name());
 }
 
 void MainWindow::onActionSave()
@@ -205,3 +244,5 @@ void MainWindow::onActionToolbarStyleFollow()
 {
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
 }
+
+
