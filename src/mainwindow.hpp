@@ -46,11 +46,11 @@ public:
 public slots:
     void onActionOpen();
 
-//private slots:
+private slots:
 //    void onActionExit();
 //    void onActionDocumentChanged();
 //    void onActionNew();
-//    void onActionSave();
+    void onActionSave();
 //    void onActionSaveAs();
 //    void onActionMenubar();
 //    void onActionStatusbar();

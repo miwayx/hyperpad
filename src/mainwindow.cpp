@@ -33,8 +33,8 @@ MainWindow::MainWindow(QWidget *parent)
 //            SLOT(onActionDocumentChanged()));
 //    connect(ui->actionNew, SIGNAL(triggered(bool)),  this, SLOT(onActionNew()));
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(onActionOpen()));
-//    connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(onActionSave()));
-//    connect(ui->actionSaveAs,SIGNAL(triggered(bool)), this, SLOT(onActionSaveas()));
+    connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(onActionSave()));
+    connect(ui->actionSaveAs,SIGNAL(triggered(bool)), this, SLOT(onActionSaveas()));
 //    connect(ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(onActionExit()));
 //    connect(ui->actionVisible_MenuBar, SIGNAL(toggled(bool)),
 //            this, SLOT(onActionMenubar()));
@@ -123,9 +123,32 @@ void MainWindow::setupToolbar()
 void MainWindow::onActionOpen()
 {
     QString file = QFileDialog::getOpenFileName(this, "Open a file");
-    _currentfile.setFilename(file);
+    _currentfile = file;
     // Set new window title
     this->setWindowTitle(_currentfile.name());
     // Read text and put in Text Editor
     _texteditor->setText(_currentfile.read());
+}
+
+void MainWindow::onActionSave()
+{
+    // Verify for the current file,
+    // if empty launch a dialog for save the file buffer
+    if(_currentfile.isEmpty()) {
+        QString file = QFileDialog::getSaveFileName(this, "Save");
+        _currentfile = file;
+        // Save the new file
+        _currentfile.save(_texteditor->toPlainText());
+    } else {
+        // Save the current file
+        _currentfile.save(_texteditor->toPlainText());
+    }
+}
+
+void MainWindow::onActionSaveAs()
+{
+    // Always launch a dialog and get a new filename
+    QString newfile = QFileDialog::getSaveFileName(this, "Save as");
+    _currentfile = newfile;
+    _currentfile.save(_texteditor->toPlainText());
 }
