@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
 //    connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onActionExit()));
     connect(_texteditor, SIGNAL(textChanged()), this,
             SLOT(onActionDocumentChanged()));
-//    connect(ui->actionNew, SIGNAL(triggered(bool)),  this, SLOT(onActionNew()));
+    connect(ui->actionNew, SIGNAL(triggered(bool)),  this, SLOT(onActionNew()));
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(onActionOpen()));
     connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(onActionSave()));
     connect(ui->actionSaveAs,SIGNAL(triggered(bool)), this, SLOT(onActionSaveas()));
@@ -167,6 +167,25 @@ void MainWindow::onActionDocumentChanged()
     // Set currentFile not saved
     _currentfile.setSaved(false);
     this->setWindowTitle("*" + _currentfile.name());
+}
+
+void MainWindow::onActionNew()
+{
+    if(!_currentfile.isSaved()){
+        documentModified();
+        // Clear the buffer text and the current file
+        _currentfile = QString();
+        _texteditor->setPlainText(QString());
+        this->setWindowTitle("untitled");
+        _currentfile.setSaved(false);
+    } else {
+        // just clear the text and the current file
+        _currentfile = QString();
+        _texteditor->setPlainText(QString());
+
+        this->setWindowTitle("untitled");
+        _currentfile.setSaved(false);
+    }
 }
 
 void MainWindow::onActionSave()

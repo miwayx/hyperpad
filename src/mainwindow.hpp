@@ -49,7 +49,7 @@ public slots:
 private slots:
 //    void onActionExit();
     void onActionDocumentChanged();
-//    void onActionNew();
+    void onActionNew();
     void onActionSave();
     void onActionSaveAs();
     void onActionMenubar();
