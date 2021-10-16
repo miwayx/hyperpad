@@ -36,24 +36,24 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(onActionSave()));
     connect(ui->actionSaveAs,SIGNAL(triggered(bool)), this, SLOT(onActionSaveas()));
 //    connect(ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(onActionExit()));
-//    connect(ui->actionVisible_MenuBar, SIGNAL(toggled(bool)),
-//            this, SLOT(onActionMenubar()));
+    connect(ui->actionVisible_MenuBar, SIGNAL(toggled(bool)),
+            this, SLOT(onActionMenubar()));
 //    connect(ui->actionVisible_StatusBar, SIGNAL(toggled(bool)),
 //            this, SLOT(onActionStatusbar()));
-//    connect(ui->actionVisible_ToolBar, SIGNAL(toggled(bool)),
-//            this, SLOT(onActionToolbar()));
-//    connect(ui->actionMovable_ToolBar, SIGNAL(toggled(bool)),
-//            this, SLOT(onActionToolbar()));
-//    connect(ui->actionToolbar_IconsOnly, SIGNAL(triggered(bool)),
-//            this, SLOT(onActionToolbarStyleIconsOnly()));
-//    connect(ui->actionToolbar_TextOnly, SIGNAL(triggered(bool)),
-//            this, SLOT(onActionToolbarStyleTextOnly()));
-//    connect(ui->actionToolbar_TextBesideIcons, SIGNAL(triggered(bool)),
-//            this, SLOT(onActionToolbarStyleTextBesideIcons()));
-//    connect(ui->actionToolbar_TextUnderIcons, SIGNAL(triggered(bool)),
-//            this, SLOT(onActionToolbarStyleTextUnderIcons()));
-//    connect(ui->actionToolbar_Follow, SIGNAL(triggered(bool)),
-//            this, SLOT(onActionToolbarStyleFollow()));
+    connect(ui->actionVisible_ToolBar, SIGNAL(toggled(bool)),
+            this, SLOT(onActionToolbar()));
+    connect(ui->actionMovable_ToolBar, SIGNAL(toggled(bool)),
+            this, SLOT(onActionToolbar()));
+    connect(ui->actionToolbar_IconsOnly, SIGNAL(triggered(bool)),
+            this, SLOT(onActionToolbarStyleIconsOnly()));
+    connect(ui->actionToolbar_TextOnly, SIGNAL(triggered(bool)),
+            this, SLOT(onActionToolbarStyleTextOnly()));
+    connect(ui->actionToolbar_TextBesideIcons, SIGNAL(triggered(bool)),
+            this, SLOT(onActionToolbarStyleTextBesideIcons()));
+    connect(ui->actionToolbar_TextUnderIcons, SIGNAL(triggered(bool)),
+            this, SLOT(onActionToolbarStyleTextUnderIcons()));
+    connect(ui->actionToolbar_Follow, SIGNAL(triggered(bool)),
+            this, SLOT(onActionToolbarStyleFollow()));
 //    connect(ui->actionFont, SIGNAL(triggered(bool)),this, SLOT(onActionNewfont()));
 //    connect(ui->actionAbout_Hyper, SIGNAL(triggered(bool)),
 //            this, SLOT(onactionAboutHyper()));
@@ -151,4 +151,57 @@ void MainWindow::onActionSaveAs()
     QString newfile = QFileDialog::getSaveFileName(this, "Save as");
     _currentfile = newfile;
     _currentfile.save(_texteditor->toPlainText());
+}
+
+void MainWindow::onActionMenubar()
+{
+    // Get the state of menubar
+    if(ui->actionVisible_MenuBar->isChecked()==true){
+        ui->menubar->setVisible(true);
+    }else{
+        ui->menubar->setVisible(false);
+    }
+}
+
+void MainWindow::onActionToolbar()
+{
+    // Get the state of toolbar
+    // is visible
+    if(ui->actionVisible_ToolBar->isChecked()==true){
+        ui->toolBar->setVisible(false);
+    }else{
+        ui->toolBar->setVisible(true);
+    }
+    // is movable
+    if(ui->actionMovable_ToolBar->isChecked()==true){
+        ui->toolBar->setMovable(true);
+    }else{
+        ui->toolBar->setMovable(false);
+    }
+}
+
+// Style of the toolbar icons and text action
+void MainWindow::onActionToolbarStyleIconsOnly()
+{
+    ui->toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+}
+
+void MainWindow::onActionToolbarStyleTextOnly()
+{
+    ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
+}
+
+void MainWindow::onActionToolbarStyleTextBesideIcons()
+{
+    ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+}
+
+void MainWindow::onActionToolbarStyleTextUnderIcons()
+{
+    ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+}
+
+void MainWindow::onActionToolbarStyleFollow()
+{
+    ui->toolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
 }

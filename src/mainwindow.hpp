@@ -51,15 +51,15 @@ private slots:
 //    void onActionDocumentChanged();
 //    void onActionNew();
     void onActionSave();
-//    void onActionSaveAs();
-//    void onActionMenubar();
+    void onActionSaveAs();
+    void onActionMenubar();
 //    void onActionStatusbar();
-//    void onActionToolbar();
-//    void onActionToolbarStyleIconsOnly();
-//    void onActionToolbarStyleTextOnly();
-//    void onActionToolbarStyleTextBesideIcons();
-//    void onActionToolbarStyleTextUnderIcons();
-//    void onActionToolbarStyleFollow();
+    void onActionToolbar();
+    void onActionToolbarStyleIconsOnly();
+    void onActionToolbarStyleTextOnly();
+    void onActionToolbarStyleTextBesideIcons();
+    void onActionToolbarStyleTextUnderIcons();
+    void onActionToolbarStyleFollow();
 //    void onActionAboutHyper();
 
 private:
