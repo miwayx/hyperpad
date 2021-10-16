@@ -16,78 +16,65 @@
  ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include "file.hpp"
+#include "io.hpp"
 
 namespace hyper {
 
-File::File()
-{
-    // Set is_saved to false
-    _is_saved = false;
-}
+namespace io {
 
-File::~File()
+bool saveText(QString filename, QString text)
 {
-    // Close if the file is not closed yet
-    if(_file.isOpen())
-        _file.close();
-}
-
-void File::setFilename(QString name)
-{
-    _filename = name;
-    _is_saved = false;
-}
-
-bool File::openFile()
-{
-    _file.setFileName(_filename);
-    _file.open(QFileDevice::ReadWrite);
-
-    if(_file.isOpen()) {
+    QFile file(filename);
+    if(file.open(QIODevice::WriteOnly)) {
+        QTextStream out(&file);
+        // Write text in the file buffer
+        out << text;
+        // all ok
+        file.close();
         return true;
     } else {
         return false;
     }
 }
 
-bool File::saveText(QString text)
+QString readFile(QString filename)
 {
-    QTextStream out(&_file);
-    // write text in file
-    out << text;
-    // get status
-    if(out.status() == out.Ok)
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly);
+    QTextStream in(&file);
+    // Return all text
+    return in.readAll();
+}
+
+} // namespace io
+
+// class currentFile
+currentFile::currentFile()
+{
+    // set default false
+    _is_saved = false;
+}
+
+currentFile::currentFile(QString filename)
+{
+    _cfilename = filename;
+    _is_saved = false;
+}
+
+QString currentFile::read()
+{
+    return io::readFile(_cfilename);
+}
+
+bool currentFile::save(QString text)
+{
+    bool ok = io::saveText(_cfilename, text);
+    if(ok) {
         return true;
-    else
+    } else {
         return false;
+    }
 }
 
-void File::closeFile()
-{
-    // Close input buffer
-    if(_file.isOpen())
-        _file.close();
-}
-
-void File::setSaved(bool saved)
-{
-    _is_saved = saved;
-}
-
-bool File::isSaved()
-{
-    return _is_saved;
-}
-
-QString File::currentFilename()
-{
-    return _filename;
-}
-
-QString File::readFile()
-{
-
-}
 
 } // namespace hyper
