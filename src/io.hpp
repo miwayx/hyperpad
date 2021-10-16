@@ -58,6 +58,10 @@ public:
     QString read();
     /// Save text in the file
     bool save(QString text);
+    /// Return the filename
+    QString name() {
+        return _cfilename;
+    }
 private:
     // Name of the current file opened
     QString _cfilename;

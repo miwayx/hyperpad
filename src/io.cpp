@@ -70,6 +70,8 @@ bool currentFile::save(QString text)
 {
     bool ok = io::saveText(_cfilename, text);
     if(ok) {
+        // set is_saved true
+        _is_saved = true;
         return true;
     } else {
         return false;
