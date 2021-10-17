@@ -172,6 +172,8 @@ void MainWindow::onActionOpen()
 {
     QString file = QFileDialog::getOpenFileName(this, "Open a file");
     _currentfile = file;
+    // Send a message to statusbar
+    _statusbar->sendMessage("File opened");
     // Set new window title
     this->setWindowTitle(_currentfile.name());
     // Read text and put in Text Editor
@@ -196,35 +198,37 @@ void MainWindow::onActionDocumentChanged()
 
 void MainWindow::onActionNew()
 {
-    if(!_currentfile.isSaved()){
+    if(!_currentfile.isSaved())
         documentModified();
-        // Clear the buffer text and the current file
-        _currentfile = QString();
-        _texteditor->setPlainText(QString());
-        this->setWindowTitle("untitled");
-        _currentfile.setSaved(false);
-    } else {
-        // just clear the text and the current file
-        _currentfile = QString();
-        _texteditor->setPlainText(QString());
-
-        this->setWindowTitle("untitled");
-        _currentfile.setSaved(false);
-    }
+    // Clear the buffer text and the current file
+    _currentfile = QString();
+    _texteditor->setPlainText(QString());
+    // Send a message to statusbar
+    _statusbar->sendMessage("New file");
+        // Set new window title
+    this->setWindowTitle("untitled");
+    _currentfile.setSaved(false);
 }
 
 void MainWindow::onActionSave()
 {
     // Verify for the current file,
     // if empty launch a dialog for save the file buffer
+    // check io errors
+    bool ok;
     if(_currentfile.isEmpty()) {
         QString file = QFileDialog::getSaveFileName(this, "Save");
         _currentfile = file;
         // Save the new file
-        _currentfile.save(_texteditor->toPlainText());
+        ok = _currentfile.save(_texteditor->toPlainText());
     } else {
         // Save the current file
-        _currentfile.save(_texteditor->toPlainText());
+        ok = _currentfile.save(_texteditor->toPlainText());
+    }
+    if(ok) {
+        _statusbar->sendMessage("File saved successfully");
+    } else {
+        _statusbar->sendMessage("Cannot save the file");
     }
 }
 
@@ -233,7 +237,12 @@ void MainWindow::onActionSaveAs()
     // Always launch a dialog and get a new filename
     QString newfile = QFileDialog::getSaveFileName(this, "Save as");
     _currentfile = newfile;
-    _currentfile.save(_texteditor->toPlainText());
+    bool ok = _currentfile.save(_texteditor->toPlainText());
+    if(ok) {
+        _statusbar->sendMessage("File saved successfully");
+    } else {
+        _statusbar->sendMessage("Cannot save the file");
+    }
 }
 
 void MainWindow::onActionMenubar()
@@ -338,7 +347,8 @@ void MainWindow::onActionPaste()
     if(_texteditor->canPaste()) {
         _texteditor->paste();
     } else {
-        // send a message to statusbar
+        // Send a error message to statusbar
+        _statusbar->sendMessage("You cant paste in this file");
     }
 }
 
