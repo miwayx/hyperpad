@@ -27,6 +27,7 @@
 #include "ui_mainwindow.h"
 #include "io.hpp"
 #include "texteditor.hpp"
+#include "statusbar.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -77,6 +78,8 @@ private:
     hyper::currentFile _currentfile;
     // Main text editor
     hyper::TextEditor *_texteditor;
+    // StatusBar
+    hyper::StatusBar *_statusbar;
     bool documentModified();
     void setupToolbar();
     // Store and Load default settings

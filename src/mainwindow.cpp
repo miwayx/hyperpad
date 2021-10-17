@@ -25,7 +25,10 @@ MainWindow::MainWindow(QWidget *parent)
     // Initialize Text Editor
     _texteditor = new hyper::TextEditor(this);
     this->setCentralWidget(_texteditor);
-
+    // Initialize StatusBar
+    _statusbar = new hyper::StatusBar();
+    this->setStatusBar(_statusbar);
+    _statusbar->sendMessage("HEllo");
     // Connecting signals
     // Verify if exit of the app
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onActionExit()));
@@ -78,8 +81,10 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete ui;
     delete _texteditor;
+    delete _statusbar;
+    delete ui;
+
 }
 
 void MainWindow::storeSettings()
