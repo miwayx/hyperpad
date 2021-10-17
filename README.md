@@ -1,3 +1,7 @@
+<div align="center">
+    <img src="data/icons/hyper_ico.png">
+</div>
+
 # HyperPad
 A fast, simple and Open Source text editor using Qt5
 
