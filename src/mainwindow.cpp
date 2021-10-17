@@ -28,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
     // Initialize StatusBar
     _statusbar = new hyper::StatusBar();
     this->setStatusBar(_statusbar);
-    _statusbar->sendMessage("HEllo");
     // Connecting signals
     // Verify if exit of the app
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onActionExit()));
