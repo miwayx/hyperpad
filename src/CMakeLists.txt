@@ -19,12 +19,14 @@ target_sources(hyperpad
     mainwindow.hpp
     io.hpp
     texteditor.hpp
+    statusbar.hpp
     # Sources
     PRIVATE
     main.cpp
     mainwindow.cpp
     io.cpp
     texteditor.cpp
+    statusbar.cpp
     # UI files
     mainwindow.ui
 )
