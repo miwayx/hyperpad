@@ -26,24 +26,35 @@ MainWindow::MainWindow(QWidget *parent)
     _texteditor = new hyper::TextEditor(this);
     this->setCentralWidget(_texteditor);
 
-//    // Connecting signals
-//    // verify if exit of the app
+    // Connecting signals
+    // Verify if exit of the app
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onActionExit()));
     connect(_texteditor, SIGNAL(textChanged()), this,
             SLOT(onActionDocumentChanged()));
+    // MenuBarActions
+    // Menu File
     connect(ui->actionNew, SIGNAL(triggered(bool)),  this, SLOT(onActionNew()));
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(onActionOpen()));
     connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(onActionSave()));
     connect(ui->actionSaveAs,SIGNAL(triggered(bool)), this, SLOT(onActionSaveas()));
     connect(ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(onActionExit()));
+    // Menu Edit
+    connect(ui->actionUndo, SIGNAL(triggered(bool)), this, SLOT(onActionUndo()));
+    connect(ui->actionRedo, SIGNAL(triggered(bool)), this, SLOT(onActionRedo()));
+    connect(ui->actionCut, SIGNAL(triggered(bool)), this, SLOT(onActionCut()));
+    connect(ui->actionCopy, SIGNAL(triggered(bool)), this, SLOT(onActionCopy()));
+    connect(ui->actionPaste, SIGNAL(triggered(bool)), this, SLOT(onActionPaste()));
+    connect(ui->actionSelect_All, SIGNAL(triggered(bool)), this,
+            SLOT(onActionSelectAllText()));
+    // Menu View
     connect(ui->actionVisible_MenuBar, SIGNAL(toggled(bool)),
             this, SLOT(onActionMenubar()));
-//    connect(ui->actionVisible_StatusBar, SIGNAL(toggled(bool)),
-//            this, SLOT(onActionStatusbar()));
     connect(ui->actionVisible_ToolBar, SIGNAL(toggled(bool)),
             this, SLOT(onActionToolbar()));
     connect(ui->actionMovable_ToolBar, SIGNAL(toggled(bool)),
             this, SLOT(onActionToolbar()));
+    //    connect(ui->actionVisible_StatusBar, SIGNAL(toggled(bool)),
+    //            this, SLOT(onActionStatusbar()));
     connect(ui->actionToolbar_IconsOnly, SIGNAL(triggered(bool)),
             this, SLOT(onActionToolbarStyleIconsOnly()));
     connect(ui->actionToolbar_TextOnly, SIGNAL(triggered(bool)),
@@ -54,14 +65,15 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT(onActionToolbarStyleTextUnderIcons()));
     connect(ui->actionToolbar_Follow, SIGNAL(triggered(bool)),
             this, SLOT(onActionToolbarStyleFollow()));
+    // Menu Help
     connect(ui->actionAbout_Hyper, SIGNAL(triggered(bool)),
             this, SLOT(onActionAboutHyper()));
     connect(ui->actionAbout_Qt, SIGNAL(triggered(bool)), qApp, SLOT(aboutQt()));
 
-    // Read the configuration
-    this->loadSettings();
     // Toolbar setup
     this->setupToolbar();
+    // Read the configuration
+    this->loadSettings();
 }
 
 MainWindow::~MainWindow()
@@ -292,4 +304,40 @@ void MainWindow::onActionAboutHyper()
     msg->exec();
 }
 
+void MainWindow::onActionUndo()
+{
+    if(_texteditor->isUndoRedoEnabled()) {
+        _texteditor->undo();
+    }
+}
 
+void MainWindow::onActionRedo()
+{
+    if(_texteditor->isUndoRedoEnabled()) {
+        _texteditor->redo();
+    }
+}
+
+void MainWindow::onActionCut()
+{
+    _texteditor->cut();
+}
+
+void MainWindow::onActionCopy()
+{
+    _texteditor->copy();
+}
+
+void MainWindow::onActionPaste()
+{
+    if(_texteditor->canPaste()) {
+        _texteditor->paste();
+    } else {
+        // send a message to statusbar
+    }
+}
+
+void MainWindow::onActionSelectAllText()
+{
+    _texteditor->selectAll();
+}

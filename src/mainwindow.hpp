@@ -42,24 +42,33 @@ public:
     // Application settings
     QSettings st;
 
-// Actions
-public slots:
-    void onActionOpen();
-
 private slots:
-    void onActionExit();
+    // Actions
     void onActionDocumentChanged();
+    // Actions in menubar
+    // Menu File
     void onActionNew();
+    void onActionOpen();
     void onActionSave();
     void onActionSaveAs();
-    void onActionMenubar();
-//    void onActionStatusbar();
+    void onActionExit();
+    // Menu Edit
+    void onActionUndo();
+    void onActionRedo();
+    void onActionCut();
+    void onActionCopy();
+    void onActionPaste();
+    void onActionSelectAllText();
+    // Menu View
     void onActionToolbar();
+    //void onActionStatusbar();
+    void onActionMenubar();
     void onActionToolbarStyleIconsOnly();
     void onActionToolbarStyleTextOnly();
     void onActionToolbarStyleTextBesideIcons();
     void onActionToolbarStyleTextUnderIcons();
     void onActionToolbarStyleFollow();
+    // Menu Help
     void onActionAboutHyper();
 
 private:
