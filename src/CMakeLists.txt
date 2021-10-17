@@ -29,4 +29,7 @@ target_sources(hyperpad
     statusbar.cpp
     # UI files
     mainwindow.ui
+    # Resources
+    # Add resources
+    ${CMAKE_SOURCE_DIR}/data/resources.qrc
 )

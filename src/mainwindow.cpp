@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionNew, SIGNAL(triggered(bool)),  this, SLOT(onActionNew()));
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(onActionOpen()));
     connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(onActionSave()));
-    connect(ui->actionSaveAs,SIGNAL(triggered(bool)), this, SLOT(onActionSaveas()));
+    connect(ui->actionSaveAs,SIGNAL(triggered(bool)), this, SLOT(onActionSaveAs()));
     connect(ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(onActionExit()));
     // Menu Edit
     connect(ui->actionUndo, SIGNAL(triggered(bool)), this, SLOT(onActionUndo()));
@@ -301,7 +301,7 @@ void MainWindow::onActionAboutHyper()
 {
     QMessageBox *msg = new QMessageBox(this);
     msg->setWindowTitle("About HyperPad");
-    msg->setIconPixmap(QPixmap(QString(":/ico/res/hyper_ico.png")));
+    msg->setIconPixmap(QPixmap(QString(":/icons/hyper_ico.png")));
     QString text =
        // Version and libs
       "Version: " + qApp->applicationVersion() +
