@@ -3,7 +3,7 @@
 </div>
 
 # HyperPad
-A fast, simple and Open Source text editor using Qt5
+A fast, simple and open-source text editor using Qt5
 
 ## Getting Started
 ### Prerequisites
@@ -33,8 +33,7 @@ $ cmake --install .
 ```
 
 ## Contributing
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) file.
-
+All pull requests will be revised, do one!
 ## License
 This project is licensed under the GPL v3 License - see the [LICENSE](LICENSE)
 file for details.
