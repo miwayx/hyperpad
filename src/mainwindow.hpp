@@ -40,8 +40,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    // Application settings
-    QSettings st;
+    // load a file
+    void loadFile(QString name);
 
 private slots:
     // Actions
@@ -73,6 +73,15 @@ private slots:
     void onActionAboutHyper();
 
 private:
+    bool documentModified();
+    void setupToolbar();
+    // Store and Load default settings
+    void storeSettings();
+    void loadSettings();
+
+    // Application settings
+    QSettings st;
+    // Ui
     Ui::MainWindow *ui;
     // Current file
     hyper::currentFile _currentfile;
@@ -80,11 +89,6 @@ private:
     hyper::TextEditor *_texteditor;
     // StatusBar
     hyper::StatusBar *_statusbar;
-    bool documentModified();
-    void setupToolbar();
-    // Store and Load default settings
-    void storeSettings();
-    void loadSettings();
 };
 
 #endif // HYPER_MAINWINDOW_HPP

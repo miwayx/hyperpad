@@ -16,47 +16,46 @@
  ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include "mainwindow.hpp"
-#include "version.hpp"
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <QIcon>
+#include "mainwindow.hpp"
+#include "version.hpp"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //Application Config
+    // Application Config
     QApplication::setApplicationName("HyperPad");
     QApplication::setApplicationVersion(HYPER_VERSION);
     QApplication::setOrganizationName("HyperPad");
     QApplication::setOrganizationDomain("https://github.con/ecsuarez/hyperpad");
-    QApplication::setWindowIcon(QIcon(":/ico/res/hyper_ico.png"));
+    QApplication::setWindowIcon(QIcon(":/icons/hyper_ico.png"));
 
-    // Init
     MainWindow mw;
 
     // Parse Arguments
-//	 if(argc != 1){
-//		QString file(argv[1]);
-//		mw.openfile(file);
-//	}
-
-//    QCommandLineParser parse;
-//    parse.setApplicationDescription("HyperPad -Fast text editor");
-//    parse.addHelpOption();
-//    parse.addVersionOption();
-//    // file argument
-//    QCommandLineOption opt_file(QStringList() << "f" << "file", "Open a file", "file");
-//    parse.addOption(opt_file);
-//    // Process parse
-//    parse.process(a);
-//    // Get file argument
-//    if(parse.isSet(opt_file)){
-//        QString filename = parse.value(opt_file);
-//        mw.openfile(filename);
+//    if(argc != 1){
+//        QString file(argv[1]);
+//        mw.loadFile(file);
 //    }
 
-    mw.show(); //Init Window
+    QCommandLineParser parse;
+    parse.setApplicationDescription("HyperPad -Fast text editor");
+    parse.addHelpOption();
+    parse.addVersionOption();
+    // File argument
+    QCommandLineOption opt_file(QStringList() << "f" << "file", "Open a file", "file");
+    parse.addOption(opt_file);
+    // Process parser
+    parse.process(a);
+    // Get file argument
+    if(parse.isSet(opt_file)){
+        QString filename = parse.value(opt_file);
+        mw.loadFile(filename);
+    }
+
+    mw.show(); // Init Window
     return a.exec();
 }

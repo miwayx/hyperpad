@@ -86,6 +86,17 @@ MainWindow::~MainWindow()
 
 }
 
+void MainWindow::loadFile(QString name)
+{
+    _currentfile = name;
+    // Send a message to statusbar
+    _statusbar->sendMessage("File opened");
+    // Set new window title
+    this->setWindowTitle(_currentfile.name());
+    // Read text and put in Text Editor
+    _texteditor->setText(_currentfile.read());
+}
+
 void MainWindow::storeSettings()
 {
     st.setValue("window/geometry", this->geometry());
@@ -170,13 +181,7 @@ void MainWindow::setupToolbar()
 void MainWindow::onActionOpen()
 {
     QString file = QFileDialog::getOpenFileName(this, "Open a file");
-    _currentfile = file;
-    // Send a message to statusbar
-    _statusbar->sendMessage("File opened");
-    // Set new window title
-    this->setWindowTitle(_currentfile.name());
-    // Read text and put in Text Editor
-    _texteditor->setText(_currentfile.read());
+    this->loadFile(file);
 }
 
 void MainWindow::onActionExit()
