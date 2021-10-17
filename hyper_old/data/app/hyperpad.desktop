@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=HyperPad
-Comment=A fast, simple and open-source text editor
-Exec=hyperpad
-Icon=hyperpad
-Terminal=false
-Type=Application
-Categories=Utility;TextEditor
-MimeType=text/plain
