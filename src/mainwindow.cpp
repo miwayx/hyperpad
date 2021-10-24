@@ -73,9 +73,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionAbout_Qt, SIGNAL(triggered(bool)), qApp, SLOT(aboutQt()));
 
     // Toolbar setup
-    this->setupToolbar();
+    setupToolbar();
     // Read the configuration
-    this->loadSettings();
+    loadSettings();
 }
 
 MainWindow::~MainWindow()
@@ -139,7 +139,6 @@ bool MainWindow::documentModified()
             // Save the file and the preferences
             case QMessageBox::Save:
                 onActionSave();
-                storeSettings();
                 return true;
             case QMessageBox::Discard:
                 return false;
@@ -189,7 +188,7 @@ void MainWindow::onActionExit()
     if(!documentModified()){
         // Save the preferences
         storeSettings();
-        qApp->quit();
+        exit(0);
     }
 }
 
