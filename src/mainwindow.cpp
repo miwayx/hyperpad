@@ -179,8 +179,11 @@ void MainWindow::setupToolbar()
 
 void MainWindow::onActionOpen()
 {
+    // Check for the document
+    documentModified();
     QString file = QFileDialog::getOpenFileName(this, "Open a file");
-    this->loadFile(file);
+    loadFile(file);
+
 }
 
 void MainWindow::onActionExit()
