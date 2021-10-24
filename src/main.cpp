@@ -33,29 +33,22 @@ int main(int argc, char *argv[])
     QApplication::setOrganizationDomain("https://github.con/ecsuarez/hyperpad");
     QApplication::setWindowIcon(QIcon(":/icons/hyper_ico.png"));
 
-    MainWindow mw;
+    MainWindow mainwindow;
 
-    // Parse Arguments
-//    if(argc != 1){
-//        QString file(argv[1]);
-//        mw.loadFile(file);
-//    }
-
-    QCommandLineParser parse;
-    parse.setApplicationDescription("HyperPad -Fast text editor");
-    parse.addHelpOption();
-    parse.addVersionOption();
+    // Parse arguments
+    QCommandLineParser parser;
+    parser.setApplicationDescription("HyperPad -Fast text editor");
+    parser.addHelpOption();
+    parser.addVersionOption();
     // File argument
-    QCommandLineOption opt_file(QStringList() << "f" << "file", "Open a file", "file");
-    parse.addOption(opt_file);
+    parser.addPositionalArgument("file", "Document to open");
     // Process parser
-    parse.process(a);
+    parser.process(a);
     // Get file argument
-    if(parse.isSet(opt_file)){
-        QString filename = parse.value(opt_file);
-        mw.loadFile(filename);
-    }
+    QStringList positionals_arguments = parser.positionalArguments();
+    if(parser.positionalArguments().count() > 0)
+        mainwindow.loadFile(positionals_arguments[0]);
 
-    mw.show(); // Init Window
+    mainwindow.show(); // Init Window
     return a.exec();
 }
