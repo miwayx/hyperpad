@@ -19,58 +19,58 @@
 #include "mainwindow.hpp"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
+    : QMainWindow(parent), m_ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+    m_ui->setupUi(this);
     // Initialize Text Editor
-    _texteditor = new hyper::TextEditor(this);
-    this->setCentralWidget(_texteditor);
+    m_texteditor = new hyper::TextEditor(this);
+    this->setCentralWidget(m_texteditor);
     // Initialize StatusBar
-    _statusbar = new hyper::StatusBar();
-    this->setStatusBar(_statusbar);
+    m_statusbar = new hyper::StatusBar();
+    this->setStatusBar(m_statusbar);
     // Connecting signals
     // Verify if exit of the app
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onActionExit()));
-    connect(_texteditor, SIGNAL(textChanged()), this,
+    connect(m_texteditor, SIGNAL(textChanged()), this,
             SLOT(onActionDocumentChanged()));
     // MenuBarActions
     // Menu File
-    connect(ui->actionNew, SIGNAL(triggered(bool)),  this, SLOT(onActionNew()));
-    connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(onActionOpen()));
-    connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(onActionSave()));
-    connect(ui->actionSaveAs,SIGNAL(triggered(bool)), this, SLOT(onActionSaveAs()));
-    connect(ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(onActionExit()));
+    connect(m_ui->actionNew, SIGNAL(triggered(bool)),  this, SLOT(onActionNew()));
+    connect(m_ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(onActionOpen()));
+    connect(m_ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(onActionSave()));
+    connect(m_ui->actionSaveAs,SIGNAL(triggered(bool)), this, SLOT(onActionSaveAs()));
+    connect(m_ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(onActionExit()));
     // Menu Edit
-    connect(ui->actionUndo, SIGNAL(triggered(bool)), this, SLOT(onActionUndo()));
-    connect(ui->actionRedo, SIGNAL(triggered(bool)), this, SLOT(onActionRedo()));
-    connect(ui->actionCut, SIGNAL(triggered(bool)), this, SLOT(onActionCut()));
-    connect(ui->actionCopy, SIGNAL(triggered(bool)), this, SLOT(onActionCopy()));
-    connect(ui->actionPaste, SIGNAL(triggered(bool)), this, SLOT(onActionPaste()));
-    connect(ui->actionSelect_All, SIGNAL(triggered(bool)), this,
+    connect(m_ui->actionUndo, SIGNAL(triggered(bool)), this, SLOT(onActionUndo()));
+    connect(m_ui->actionRedo, SIGNAL(triggered(bool)), this, SLOT(onActionRedo()));
+    connect(m_ui->actionCut, SIGNAL(triggered(bool)), this, SLOT(onActionCut()));
+    connect(m_ui->actionCopy, SIGNAL(triggered(bool)), this, SLOT(onActionCopy()));
+    connect(m_ui->actionPaste, SIGNAL(triggered(bool)), this, SLOT(onActionPaste()));
+    connect(m_ui->actionSelect_All, SIGNAL(triggered(bool)), this,
             SLOT(onActionSelectAllText()));
     // Menu View
-    connect(ui->actionVisible_MenuBar, SIGNAL(toggled(bool)),
+    connect(m_ui->actionVisible_MenuBar, SIGNAL(toggled(bool)),
             this, SLOT(onActionMenubar()));
-    connect(ui->actionVisible_ToolBar, SIGNAL(toggled(bool)),
+    connect(m_ui->actionVisible_ToolBar, SIGNAL(toggled(bool)),
             this, SLOT(onActionToolbar()));
-    connect(ui->actionMovable_ToolBar, SIGNAL(toggled(bool)),
+    connect(m_ui->actionMovable_ToolBar, SIGNAL(toggled(bool)),
             this, SLOT(onActionToolbar()));
     //    connect(ui->actionVisible_StatusBar, SIGNAL(toggled(bool)),
     //            this, SLOT(onActionStatusbar()));
-    connect(ui->actionToolbar_IconsOnly, SIGNAL(triggered(bool)),
+    connect(m_ui->actionToolbar_IconsOnly, SIGNAL(triggered(bool)),
             this, SLOT(onActionToolbarStyleIconsOnly()));
-    connect(ui->actionToolbar_TextOnly, SIGNAL(triggered(bool)),
+    connect(m_ui->actionToolbar_TextOnly, SIGNAL(triggered(bool)),
             this, SLOT(onActionToolbarStyleTextOnly()));
-    connect(ui->actionToolbar_TextBesideIcons, SIGNAL(triggered(bool)),
+    connect(m_ui->actionToolbar_TextBesideIcons, SIGNAL(triggered(bool)),
             this, SLOT(onActionToolbarStyleTextBesideIcons()));
-    connect(ui->actionToolbar_TextUnderIcons, SIGNAL(triggered(bool)),
+    connect(m_ui->actionToolbar_TextUnderIcons, SIGNAL(triggered(bool)),
             this, SLOT(onActionToolbarStyleTextUnderIcons()));
-    connect(ui->actionToolbar_Follow, SIGNAL(triggered(bool)),
+    connect(m_ui->actionToolbar_Follow, SIGNAL(triggered(bool)),
             this, SLOT(onActionToolbarStyleFollow()));
     // Menu Help
-    connect(ui->actionAbout_Hyper, SIGNAL(triggered(bool)),
+    connect(m_ui->actionAbout_Hyper, SIGNAL(triggered(bool)),
             this, SLOT(onActionAboutHyper()));
-    connect(ui->actionAbout_Qt, SIGNAL(triggered(bool)), qApp, SLOT(aboutQt()));
+    connect(m_ui->actionAbout_Qt, SIGNAL(triggered(bool)), qApp, SLOT(aboutQt()));
 
     // Toolbar setup
     setupToolbar();
@@ -80,52 +80,52 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete _texteditor;
-    delete _statusbar;
-    delete ui;
+    delete m_texteditor;
+    delete m_statusbar;
+    delete m_ui;
 
 }
 
 void MainWindow::loadFile(QString name)
 {
-    _currentfile = name;
+    m_currentfile = name;
     // Send a message to statusbar
-    _statusbar->sendMessage("File opened");
+    m_statusbar->sendMessage("File opened");
     // Set new window title
-    this->setWindowTitle(_currentfile.name());
+    this->setWindowTitle(m_currentfile.name());
     // Read text and put in Text Editor
-    _texteditor->setText(_currentfile.read());
+    m_texteditor->setText(m_currentfile.read());
 }
 
 void MainWindow::storeSettings()
 {
     st.setValue("window/geometry", this->geometry());
-    st.setValue("window/hidden_menubar", ui->menubar->isHidden());
-    st.setValue("window/hidden_statusbar", ui->statusbar->isHidden());
-    st.setValue("toolbar/hidden", ui->toolBar->isHidden());
-    st.setValue("toolbar/movable", ui->toolBar->isMovable());
-    st.setValue("toolbar/geometry", ui->toolBar->geometry());
-    st.setValue("toolbar/orientation", ui->toolBar->orientation());
-    st.setValue("toolbar/style", ui->toolBar->toolButtonStyle());
+    st.setValue("window/hidden_menubar", m_ui->menubar->isHidden());
+    st.setValue("window/hidden_statusbar", m_ui->statusbar->isHidden());
+    st.setValue("toolbar/hidden", m_ui->toolBar->isHidden());
+    st.setValue("toolbar/movable", m_ui->toolBar->isMovable());
+    st.setValue("toolbar/geometry", m_ui->toolBar->geometry());
+    st.setValue("toolbar/orientation", m_ui->toolBar->orientation());
+    st.setValue("toolbar/style", m_ui->toolBar->toolButtonStyle());
 }
 
 void MainWindow::loadSettings()
 {
     this->setGeometry(st.value("window/geometry",
                                 QRect(180,150,700,360)).toRect());
-    ui->menubar->setHidden(st.value("window/hidden_menubar").toBool());
-    ui->statusbar->setHidden(st.value("window/hidden_statusbar").toBool());
-    ui->toolBar->setHidden(st.value("toolbar/hidden").toBool());
-    ui->toolBar->setMovable(st.value("toolbar/movable").toBool());
-    ui->toolBar->setGeometry(st.value("toolbar/geometry").toRect());
-    ui->toolBar->setToolButtonStyle(
+    m_ui->menubar->setHidden(st.value("window/hidden_menubar").toBool());
+    m_ui->statusbar->setHidden(st.value("window/hidden_statusbar").toBool());
+    m_ui->toolBar->setHidden(st.value("toolbar/hidden").toBool());
+    m_ui->toolBar->setMovable(st.value("toolbar/movable").toBool());
+    m_ui->toolBar->setGeometry(st.value("toolbar/geometry").toRect());
+    m_ui->toolBar->setToolButtonStyle(
         st.value("toolbar/style").value<Qt::ToolButtonStyle>());
 }
 
 bool MainWindow::documentModified()
 {
-    if(!_currentfile.isSaved()){
-        if(_texteditor->document()->isModified()){
+    if(!m_currentfile.isSaved()){
+        if(m_texteditor->document()->isModified()){
             // If the document change launch a message
             QMessageBox *msgBox = new QMessageBox(this);
             msgBox->setText("The document has been modified.");
@@ -156,25 +156,25 @@ bool MainWindow::documentModified()
 void MainWindow::setupToolbar()
 {
     // Actions
-    ui->toolBar->addAction(ui->actionNew);
-    ui->toolBar->addAction(ui->actionOpen);
-    ui->toolBar->addAction(ui->actionSave);
-    ui->toolBar->addSeparator();
-    ui->toolBar->addAction(ui->actionRedo);
-    ui->toolBar->addAction(ui->actionUndo);
-    ui->toolBar->addAction(ui->actionCut);
-    ui->toolBar->addAction(ui->actionCopy);
-    ui->toolBar->addAction(ui->actionPaste);
+    m_ui->toolBar->addAction(m_ui->actionNew);
+    m_ui->toolBar->addAction(m_ui->actionOpen);
+    m_ui->toolBar->addAction(m_ui->actionSave);
+    m_ui->toolBar->addSeparator();
+    m_ui->toolBar->addAction(m_ui->actionRedo);
+    m_ui->toolBar->addAction(m_ui->actionUndo);
+    m_ui->toolBar->addAction(m_ui->actionCut);
+    m_ui->toolBar->addAction(m_ui->actionCopy);
+    m_ui->toolBar->addAction(m_ui->actionPaste);
 
     // Checking
-    if(ui->menubar->isHidden() == false)
-        ui->actionVisible_MenuBar->setChecked(true);
+    if(m_ui->menubar->isHidden() == false)
+        m_ui->actionVisible_MenuBar->setChecked(true);
     if(st.value("toolbar/movable").toBool() == true)
-        ui->actionMovable_ToolBar->setChecked(true);
+        m_ui->actionMovable_ToolBar->setChecked(true);
     if(st.value("toolbar/hidden").toBool() == true)
-        ui->actionVisible_ToolBar->setChecked(true);
-    if(ui->statusbar->isHidden() == false)
-        ui->actionVisible_StatusBar->setChecked(true);
+        m_ui->actionVisible_ToolBar->setChecked(true);
+    if(m_ui->statusbar->isHidden() == false)
+        m_ui->actionVisible_StatusBar->setChecked(true);
 }
 
 void MainWindow::onActionOpen()
@@ -198,22 +198,22 @@ void MainWindow::onActionExit()
 void MainWindow::onActionDocumentChanged()
 {
     // Set currentFile not saved
-    _currentfile.setSaved(false);
-    this->setWindowTitle("*" + _currentfile.name());
+    m_currentfile.setSaved(false);
+    this->setWindowTitle("*" + m_currentfile.name());
 }
 
 void MainWindow::onActionNew()
 {
-    if(!_currentfile.isSaved())
+    if(!m_currentfile.isSaved())
         documentModified();
     // Clear the buffer text and the current file
-    _currentfile = QString();
-    _texteditor->setPlainText(QString());
+    m_currentfile = QString();
+    m_texteditor->setPlainText(QString());
     // Send a message to statusbar
-    _statusbar->sendMessage("New file");
+    m_statusbar->sendMessage("New file");
         // Set new window title
     this->setWindowTitle("untitled");
-    _currentfile.setSaved(false);
+    m_currentfile.setSaved(false);
 }
 
 void MainWindow::onActionSave()
@@ -222,19 +222,19 @@ void MainWindow::onActionSave()
     // if empty launch a dialog for save the file buffer
     // check io errors
     bool ok;
-    if(_currentfile.isEmpty()) {
+    if(m_currentfile.isEmpty()) {
         QString file = QFileDialog::getSaveFileName(this, "Save");
-        _currentfile = file;
+        m_currentfile = file;
         // Save the new file
-        ok = _currentfile.save(_texteditor->toPlainText());
+        ok = m_currentfile.save(m_texteditor->toPlainText());
     } else {
         // Save the current file
-        ok = _currentfile.save(_texteditor->toPlainText());
+        ok = m_currentfile.save(m_texteditor->toPlainText());
     }
     if(ok) {
-        _statusbar->sendMessage("File saved successfully");
+        m_statusbar->sendMessage("File saved successfully");
     } else {
-        _statusbar->sendMessage("Cannot save the file");
+        m_statusbar->sendMessage("Cannot save the file");
     }
 }
 
@@ -242,22 +242,22 @@ void MainWindow::onActionSaveAs()
 {
     // Always launch a dialog and get a new filename
     QString newfile = QFileDialog::getSaveFileName(this, "Save as");
-    _currentfile = newfile;
-    bool ok = _currentfile.save(_texteditor->toPlainText());
+    m_currentfile = newfile;
+    bool ok = m_currentfile.save(m_texteditor->toPlainText());
     if(ok) {
-        _statusbar->sendMessage("File saved successfully");
+        m_statusbar->sendMessage("File saved successfully");
     } else {
-        _statusbar->sendMessage("Cannot save the file");
+        m_statusbar->sendMessage("Cannot save the file");
     }
 }
 
 void MainWindow::onActionMenubar()
 {
     // Get the state of menubar
-    if(ui->actionVisible_MenuBar->isChecked()==true){
-        ui->menubar->setVisible(true);
+    if(m_ui->actionVisible_MenuBar->isChecked()==true){
+        m_ui->menubar->setVisible(true);
     }else{
-        ui->menubar->setVisible(false);
+        m_ui->menubar->setVisible(false);
     }
 }
 
@@ -265,43 +265,43 @@ void MainWindow::onActionToolbar()
 {
     // Get the state of toolbar
     // is visible
-    if(ui->actionVisible_ToolBar->isChecked()==true){
-        ui->toolBar->setVisible(false);
+    if(m_ui->actionVisible_ToolBar->isChecked()==true){
+        m_ui->toolBar->setVisible(false);
     }else{
-        ui->toolBar->setVisible(true);
+        m_ui->toolBar->setVisible(true);
     }
     // is movable
-    if(ui->actionMovable_ToolBar->isChecked()==true){
-        ui->toolBar->setMovable(true);
+    if(m_ui->actionMovable_ToolBar->isChecked()==true){
+        m_ui->toolBar->setMovable(true);
     }else{
-        ui->toolBar->setMovable(false);
+        m_ui->toolBar->setMovable(false);
     }
 }
 
 // Style of the toolbar icons and text action
 void MainWindow::onActionToolbarStyleIconsOnly()
 {
-    ui->toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    m_ui->toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 }
 
 void MainWindow::onActionToolbarStyleTextOnly()
 {
-    ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
+    m_ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
 }
 
 void MainWindow::onActionToolbarStyleTextBesideIcons()
 {
-    ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    m_ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 }
 
 void MainWindow::onActionToolbarStyleTextUnderIcons()
 {
-    ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    m_ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 }
 
 void MainWindow::onActionToolbarStyleFollow()
 {
-    ui->toolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
+    m_ui->toolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
 }
 
 void MainWindow::onActionAboutHyper()
@@ -326,39 +326,39 @@ void MainWindow::onActionAboutHyper()
 
 void MainWindow::onActionUndo()
 {
-    if(_texteditor->isUndoRedoEnabled()) {
-        _texteditor->undo();
+    if(m_texteditor->isUndoRedoEnabled()) {
+        m_texteditor->undo();
     }
 }
 
 void MainWindow::onActionRedo()
 {
-    if(_texteditor->isUndoRedoEnabled()) {
-        _texteditor->redo();
+    if(m_texteditor->isUndoRedoEnabled()) {
+        m_texteditor->redo();
     }
 }
 
 void MainWindow::onActionCut()
 {
-    _texteditor->cut();
+    m_texteditor->cut();
 }
 
 void MainWindow::onActionCopy()
 {
-    _texteditor->copy();
+    m_texteditor->copy();
 }
 
 void MainWindow::onActionPaste()
 {
-    if(_texteditor->canPaste()) {
-        _texteditor->paste();
+    if(m_texteditor->canPaste()) {
+        m_texteditor->paste();
     } else {
         // Send a error message to statusbar
-        _statusbar->sendMessage("You cant paste in this file");
+        m_statusbar->sendMessage("You cant paste in this file");
     }
 }
 
 void MainWindow::onActionSelectAllText()
 {
-    _texteditor->selectAll();
+    m_texteditor->selectAll();
 }

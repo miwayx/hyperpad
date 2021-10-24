@@ -82,13 +82,13 @@ private:
     // Application settings
     QSettings st;
     // Ui
-    Ui::MainWindow *ui;
+    Ui::MainWindow *m_ui;
     // Current file
-    hyper::currentFile _currentfile;
+    hyper::currentFile m_currentfile;
     // Main text editor
-    hyper::TextEditor *_texteditor;
+    hyper::TextEditor *m_texteditor;
     // StatusBar
-    hyper::StatusBar *_statusbar;
+    hyper::StatusBar *m_statusbar;
 };
 
 #endif // HYPER_MAINWINDOW_HPP
