@@ -30,13 +30,9 @@ class StatusBar : public QStatusBar
 public:
     explicit StatusBar(QWidget *parent = nullptr);
     ~StatusBar();
-    /// Send a message to statusbar
+    /// Send a message to statusbar for 4 seconds
     void sendMessage(QString message);
-    /// Send a message to statusbar with operator<<
-    void operator<<(QString message);
-private:
-    // Show messages
-    QLabel *_lstatus;
+
 };
 
 } // namespace hyper

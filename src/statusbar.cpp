@@ -23,23 +23,16 @@ namespace hyper {
 StatusBar::StatusBar(QWidget *parent) : QStatusBar(parent)
 {
     // Initialize widgets
-    _lstatus = new QLabel();
-    this->addWidget(_lstatus);
+
 }
 
 StatusBar::~StatusBar()
 {
-    delete _lstatus;
 }
 
 void StatusBar::sendMessage(QString message)
 {
-    _lstatus->setText(message);
-}
-
-void StatusBar::operator<<(QString message)
-{
-    this->sendMessage(message);
+    this->showMessage(message, 4000);
 }
 
 
