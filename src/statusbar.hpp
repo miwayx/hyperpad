@@ -20,7 +20,6 @@
 #define HYPER_STATUSBAR_HPP
 
 #include <QStatusBar>
-#include <QLabel>
 
 namespace hyper {
 

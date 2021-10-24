@@ -18,6 +18,9 @@
 
 #include "mainwindow.hpp"
 
+#include <QMessageBox>
+#include <QFileDialog>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), m_ui(new Ui::MainWindow)
 {

@@ -19,15 +19,13 @@
 #ifndef HYPER_MAINWINDOW_HPP
 #define HYPER_MAINWINDOW_HPP
 
-#include <QMainWindow>
-#include <QSettings>
-#include <QMessageBox>
-#include <QFileDialog>
-
 #include "ui_mainwindow.h"
 #include "io.hpp"
 #include "texteditor.hpp"
 #include "statusbar.hpp"
+
+#include <QMainWindow>
+#include <QSettings>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
