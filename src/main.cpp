@@ -19,7 +19,6 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
-#include <QIcon>
 #include "mainwindow.hpp"
 #include "version.hpp"
 
@@ -33,7 +32,7 @@ int main(int argc, char *argv[])
     QApplication::setOrganizationDomain("https://github.con/ecsuarez/hyperpad");
     QApplication::setWindowIcon(QIcon(":/icons/hyper_ico.png"));
 
-    MainWindow mainwindow;
+    HyperWindow mainwindow;
 
     // Parse arguments
     QCommandLineParser parser;

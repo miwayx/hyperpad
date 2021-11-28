@@ -49,64 +49,64 @@ QString readFile(QString filename)
 } // namespace io
 
 // class currentFile
-currentFile::currentFile()
+CurrentFile::CurrentFile()
 {
     // set default false
-    _is_saved = false;
+    m_is_saved = false;
 }
 
-currentFile::currentFile(QString filename)
+CurrentFile::CurrentFile(QString filename)
 {
-    _cfilename = filename;
-    _is_saved = false;
+    m_cfilename = filename;
+    m_is_saved = false;
 }
 
-void currentFile::setFilename(QString filename) {
-    _cfilename = filename;
+void CurrentFile::setFilename(QString filename) {
+    m_cfilename = filename;
     // set is_saved false
-    _is_saved = false;
+    m_is_saved = false;
 }
 
-void currentFile::setSaved(bool op) {
-    _is_saved = op;
+void CurrentFile::setSaved(bool op) {
+    m_is_saved = op;
 }
 
-bool currentFile::isSaved() {
-    return _is_saved;
+bool CurrentFile::isSaved() {
+    return m_is_saved;
 }
 
-QString currentFile::read()
+QString CurrentFile::read()
 {
-    return io::readFile(_cfilename);
+    return io::readFile(m_cfilename);
 }
 
-bool currentFile::save(QString text)
+bool CurrentFile::save(QString text)
 {
-    bool ok = io::saveText(_cfilename, text);
+    bool ok = io::saveText(m_cfilename, text);
     if(ok) {
         // set is_saved true
-        _is_saved = true;
+        m_is_saved = true;
         return true;
     } else {
         return false;
     }
 }
 
-QString currentFile::name()
+QString CurrentFile::name()
 {
-    return _cfilename;
+    return m_cfilename;
 }
 
-bool currentFile::isEmpty()
+bool CurrentFile::isEmpty()
 {
     // check if empty the string
-    if(_cfilename.isEmpty())
+    if(m_cfilename.isEmpty())
         return true;
     else
         return false;
 }
 
-void currentFile::operator=(QString name){
+void CurrentFile::operator=(QString name){
     this->setFilename(name);
 }
 

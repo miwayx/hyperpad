@@ -19,29 +19,40 @@
 #ifndef HYPER_MAINWINDOW_HPP
 #define HYPER_MAINWINDOW_HPP
 
+#include <QMainWindow>
+#include <QSettings>
+
 #include "ui_mainwindow.h"
 #include "io.hpp"
 #include "texteditor.hpp"
 #include "statusbar.hpp"
 
-#include <QMainWindow>
-#include <QSettings>
-
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class HyperWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-    // load a file
+    HyperWindow(QWidget *parent = nullptr);
+    ~HyperWindow();
+    // Load a file
     void loadFile(QString name);
 
-private slots:
+// Private methods
+private:
+    bool documentModified();
+    void setupToolbar();
+    // Store and Load default settings
+    void storeSettings();
+    void loadSettings();
+
+    // Set the windows caption
+    void updateWindowCaption();
+
+private Q_SLOTS:
     // Actions
     void onActionDocumentChanged();
     // Actions in menubar
@@ -70,19 +81,14 @@ private slots:
     // Menu Help
     void onActionAboutHyper();
 
+// Private objects
 private:
-    bool documentModified();
-    void setupToolbar();
-    // Store and Load default settings
-    void storeSettings();
-    void loadSettings();
-
     // Application settings
-    QSettings st;
+    QSettings m_settings;
     // Ui
     Ui::MainWindow *m_ui;
     // Current file
-    hyper::currentFile m_currentfile;
+    hyper::CurrentFile m_currentfile;
     // Main text editor
     hyper::TextEditor *m_texteditor;
     // StatusBar

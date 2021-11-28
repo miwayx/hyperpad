@@ -36,12 +36,12 @@ QString readFile(QString filename);
 } //namespace io
 
 /// Controller for current file in the editor
-class currentFile
+class CurrentFile
 {
 public:
-    currentFile();
-    currentFile(QString filename);
-    ~currentFile(){};
+    CurrentFile();
+    CurrentFile(QString filename);
+    ~CurrentFile(){};
     /// Set a filename
     void setFilename(QString filename);
     /// Set saved the file
@@ -62,9 +62,9 @@ public:
 
 private:
     // Name of the current file opened
-    QString _cfilename;
+    QString m_cfilename;
     // if saved
-    bool _is_saved;
+    bool m_is_saved;
 };
 
 } // namespace hyper
