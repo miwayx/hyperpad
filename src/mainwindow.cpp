@@ -333,7 +333,7 @@ void HyperWindow::onActionAboutHyper()
        // Version and libs
       "Version: " + qApp->applicationVersion() +
       "\nLibraries:\n" +
-        "Qt 5.15.2 (GCC 10.2.0, 64 bit)\n" +
+        qVersion() +
       // Author
       "Authors:\n" +
         "(C) 2021 Ernest C. Suarez <ernestcsuarez@gmail.com>\n" +
