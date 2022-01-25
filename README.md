@@ -5,7 +5,7 @@ A fast, simple and open-source text editor using Qt5
 
 ## Getting Started
 ### Prerequisites
-* qt5 >= 5.12
+* qt6 >= 6.0
 * cmake >= 3.5
 * C++ compiler (like GCC or Clang)
 
