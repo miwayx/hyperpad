@@ -22,7 +22,7 @@
 #include <QFile>
 #include <QTextStream>
 
-namespace hyper {
+namespace Hyper {
 
 /// Basic io functions
 namespace io {

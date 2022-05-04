@@ -18,7 +18,7 @@
 
 #include "statusbar.hpp"
 
-namespace hyper {
+namespace Hyper {
 
 StatusBar::StatusBar(QWidget *parent) : QStatusBar(parent)
 {

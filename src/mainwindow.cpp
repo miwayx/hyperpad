@@ -26,10 +26,10 @@ HyperWindow::HyperWindow(QWidget *parent)
 {
     m_ui->setupUi(this);
     // Initialize Text Editor
-    m_texteditor = new hyper::TextEditor(this);
+    m_texteditor = new Hyper::TextEditor(this);
     this->setCentralWidget(m_texteditor);
     // Initialize StatusBar
-    m_statusbar = new hyper::StatusBar();
+    m_statusbar = new Hyper::StatusBar();
     this->setStatusBar(m_statusbar);
     // Connecting signals
     // Verify if exit of the app
@@ -38,8 +38,8 @@ HyperWindow::HyperWindow(QWidget *parent)
             SLOT(onActionDocumentChanged()));
     // MenuBarActions
     // Menu File
-    connect(m_ui->actionNew, SIGNAL(triggered(bool)),  this, SLOT(onActionMenuNew()));
-    connect(m_ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(onActionMenuOpen()));
+    connect(m_ui->actionNew, SIGNAL(triggered(bool)),  this, SLOT(onActionNew()));
+    connect(m_ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(onActionOpen()));
     connect(m_ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(onActionSave()));
     connect(m_ui->actionSaveAs,SIGNAL(triggered(bool)), this, SLOT(onActionSaveAs()));
     connect(m_ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(onActionExit()));
@@ -58,8 +58,8 @@ HyperWindow::HyperWindow(QWidget *parent)
             this, SLOT(onActionToolbar()));
     connect(m_ui->actionMovable_ToolBar, SIGNAL(toggled(bool)),
             this, SLOT(onActionToolbar()));
-    //    connect(ui->actionVisible_StatusBar, SIGNAL(toggled(bool)),
-    //            this, SLOT(onActionStatusbar()));
+        connect(m_ui->actionVisible_StatusBar, SIGNAL(toggled(bool)),
+                this, SLOT(onActionStatusbar()));
     connect(m_ui->actionToolbar_IconsOnly, SIGNAL(triggered(bool)),
             this, SLOT(onActionToolbarStyleIconsOnly()));
     connect(m_ui->actionToolbar_TextOnly, SIGNAL(triggered(bool)),
@@ -75,10 +75,10 @@ HyperWindow::HyperWindow(QWidget *parent)
             this, SLOT(onActionAboutHyper()));
     connect(m_ui->actionAbout_Qt, SIGNAL(triggered(bool)), qApp, SLOT(aboutQt()));
 
-    // Toolbar setup
-    setupToolbar();
     // Read the configuration
     loadSettings();
+    // Toolbar setup
+    setupActions();
 }
 
 HyperWindow::~HyperWindow()
@@ -104,7 +104,7 @@ void HyperWindow::storeSettings()
 {
     m_settings.setValue("window/geometry", this->geometry());
     m_settings.setValue("window/hidden_menubar", m_ui->menubar->isHidden());
-    m_settings.setValue("window/hidden_statusbar", m_ui->statusbar->isHidden());
+    m_settings.setValue("window/hidden_statusbar", m_statusbar->isHidden());
     m_settings.setValue("toolbar/hidden", m_ui->toolBar->isHidden());
     m_settings.setValue("toolbar/movable", m_ui->toolBar->isMovable());
     m_settings.setValue("toolbar/geometry", m_ui->toolBar->geometry());
@@ -117,7 +117,7 @@ void HyperWindow::loadSettings()
     this->setGeometry(m_settings.value("window/geometry",
                                 QRect(180,150,700,360)).toRect());
     m_ui->menubar->setHidden(m_settings.value("window/hidden_menubar").toBool());
-    m_ui->statusbar->setHidden(m_settings.value("window/hidden_statusbar").toBool());
+    m_statusbar->setHidden(m_settings.value("window/hidden_statusbar").toBool());
     m_ui->toolBar->setHidden(m_settings.value("toolbar/hidden").toBool());
     m_ui->toolBar->setMovable(m_settings.value("toolbar/movable").toBool());
     m_ui->toolBar->setGeometry(m_settings.value("toolbar/geometry").toRect());
@@ -156,7 +156,7 @@ bool HyperWindow::documentModified()
     return true;
 }
 
-void HyperWindow::setupToolbar()
+void HyperWindow::setupActions()
 {
     // Actions
     m_ui->toolBar->addAction(m_ui->actionNew);
@@ -176,7 +176,7 @@ void HyperWindow::setupToolbar()
         m_ui->actionMovable_ToolBar->setChecked(true);
     if(m_settings.value("toolbar/hidden").toBool() == true)
         m_ui->actionVisible_ToolBar->setChecked(true);
-    if(m_ui->statusbar->isHidden() == false)
+    if(m_statusbar->isHidden() == false)
         m_ui->actionVisible_StatusBar->setChecked(true);
 }
 
@@ -202,7 +202,8 @@ void HyperWindow::updateWindowCaption()
 void HyperWindow::onActionOpen()
 {
     // Check for the document
-    documentModified();
+    if(!m_currentfile.isSaved())
+        documentModified();
     QString file = QFileDialog::getOpenFileName(this, "Open a file");
     loadFile(file);
 
@@ -274,7 +275,7 @@ void HyperWindow::onActionSaveAs()
 void HyperWindow::onActionMenubar()
 {
     // Get the state of menubar
-    if(m_ui->actionVisible_MenuBar->isChecked()==true){
+    if(m_ui->actionVisible_MenuBar->isChecked() == true){
         m_ui->menubar->setVisible(true);
     }else{
         m_ui->menubar->setVisible(false);
@@ -285,16 +286,26 @@ void HyperWindow::onActionToolbar()
 {
     // Get the state of toolbar
     // is visible
-    if(m_ui->actionVisible_ToolBar->isChecked()==true){
+    if(m_ui->actionVisible_ToolBar->isChecked() == true){
         m_ui->toolBar->setVisible(false);
     }else{
         m_ui->toolBar->setVisible(true);
     }
     // is movable
-    if(m_ui->actionMovable_ToolBar->isChecked()==true){
+    if(m_ui->actionMovable_ToolBar->isChecked() == true){
         m_ui->toolBar->setMovable(true);
     }else{
         m_ui->toolBar->setMovable(false);
+    }
+}
+
+void HyperWindow::onActionStatusbar()
+{
+    // Get the state of statubar
+    if(m_ui->actionVisible_StatusBar->isChecked()== true) {
+        m_statusbar->setVisible(true);
+    } else {
+        m_statusbar->setVisible(false);
     }
 }
 
@@ -335,7 +346,7 @@ void HyperWindow::onActionAboutHyper()
       "\nLibraries:\n" +
         qVersion() +
       // Author
-      "Authors:\n" +
+      "\nAuthors:\n" +
         "(C) 2021 Ernest C. Suarez <ernestcsuarez@gmail.com>\n" +
       // Licence
       "\nLicence: GNU General Public Licence Version 3\n" +

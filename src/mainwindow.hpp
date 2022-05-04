@@ -22,13 +22,16 @@
 #include <QMainWindow>
 #include <QSettings>
 
-#include "ui_mainwindow.h"
 #include "io.hpp"
-#include "texteditor.hpp"
 #include "statusbar.hpp"
+#include "texteditor.hpp"
+#include "ui_mainwindow.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui
+{
+class MainWindow;
+}
 QT_END_NAMESPACE
 
 class HyperWindow : public QMainWindow
@@ -41,10 +44,10 @@ public:
     // Load a file
     void loadFile(QString name);
 
-// Private methods
+    // Private methods
 private:
     bool documentModified();
-    void setupToolbar();
+    void setupActions();
     // Store and Load default settings
     void storeSettings();
     void loadSettings();
@@ -71,7 +74,7 @@ private Q_SLOTS:
     void onActionSelectAllText();
     // Menu View
     void onActionToolbar();
-    //void onActionStatusbar();
+    void onActionStatusbar();
     void onActionMenubar();
     void onActionToolbarStyleIconsOnly();
     void onActionToolbarStyleTextOnly();
@@ -81,19 +84,18 @@ private Q_SLOTS:
     // Menu Help
     void onActionAboutHyper();
 
-// Private objects
+    // Private objects
 private:
     // Application settings
     QSettings m_settings;
     // Ui
     Ui::MainWindow *m_ui;
     // Current file
-    hyper::CurrentFile m_currentfile;
+    Hyper::CurrentFile m_currentfile;
     // Main text editor
-    hyper::TextEditor *m_texteditor;
+    Hyper::TextEditor *m_texteditor;
     // StatusBar
-    hyper::StatusBar *m_statusbar;
+    Hyper::StatusBar *m_statusbar;
 };
 
 #endif // HYPER_MAINWINDOW_HPP
-

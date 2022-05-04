@@ -21,7 +21,7 @@
 
 #include <QStatusBar>
 
-namespace hyper {
+namespace Hyper {
 
 class StatusBar : public QStatusBar
 {
