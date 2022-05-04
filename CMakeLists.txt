@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(hyperpad VERSION 0.60)
+project(hyperpad VERSION 0.60.1)
 
 # Version configuration
 configure_file (
