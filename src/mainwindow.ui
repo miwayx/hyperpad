@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>820</width>
+    <width>716</width>
     <height>420</height>
    </rect>
   </property>
@@ -65,8 +65,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>820</width>
-     <height>21</height>
+     <width>716</width>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -124,8 +124,6 @@
      <addaction name="actionMovable_ToolBar"/>
      <addaction name="actionVisible_ToolBar"/>
     </widget>
-    <addaction name="actionZoom_in"/>
-    <addaction name="actionZoom_out"/>
     <addaction name="separator"/>
     <addaction name="menuToolbar"/>
     <addaction name="actionVisible_StatusBar"/>
@@ -287,30 +285,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+A</string>
-   </property>
-  </action>
-  <action name="actionZoom_in">
-   <property name="icon">
-    <iconset theme="zoom-in">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
-   <property name="text">
-    <string>Zoom in</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl++</string>
-   </property>
-  </action>
-  <action name="actionZoom_out">
-   <property name="icon">
-    <iconset theme="zoom-out">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
-   <property name="text">
-    <string>Zoom out</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+-</string>
    </property>
   </action>
   <action name="actionAbout_Hyper">

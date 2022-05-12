@@ -21,7 +21,7 @@
 
 #include <QTextEdit>
 
-namespace hyper {
+namespace Hyper {
 
 class TextEditor : public QTextEdit
 {

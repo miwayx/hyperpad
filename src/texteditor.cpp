@@ -18,7 +18,7 @@
 
 #include "texteditor.hpp"
 
-namespace hyper {
+namespace Hyper {
 
 TextEditor::TextEditor(QWidget *parent) : QTextEdit(parent)
 {

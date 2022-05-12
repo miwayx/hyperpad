@@ -18,7 +18,7 @@
 
 #include "io.hpp"
 
-namespace hyper {
+namespace Hyper {
 
 namespace io {
 
