@@ -21,7 +21,8 @@
 
 #include <QStatusBar>
 
-namespace Hyper {
+namespace Hyper
+{
 
 class StatusBar : public QStatusBar
 {
@@ -31,7 +32,6 @@ public:
     ~StatusBar();
     /// Send a message to statusbar for 4 seconds
     void sendMessage(QString message);
-
 };
 
 } // namespace hyper

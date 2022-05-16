@@ -18,33 +18,35 @@
 
 #include "io.hpp"
 
-namespace Hyper {
-
-namespace io {
-
-bool saveText(QString filename, QString text)
+namespace Hyper
 {
-    QFile file(filename);
-    if(file.open(QIODevice::WriteOnly)) {
-        QTextStream out(&file);
-        // Write text in the file buffer
-        out << text;
-        // all ok
-        file.close();
-        return true;
-    } else {
-        return false;
+
+namespace io
+{
+
+    bool saveText(QString filename, QString text)
+    {
+        QFile file(filename);
+        if (file.open(QIODevice::WriteOnly)) {
+            QTextStream out(&file);
+            // Write text in the file buffer
+            out << text;
+            // all ok
+            file.close();
+            return true;
+        } else {
+            return false;
+        }
     }
-}
 
-QString readFile(QString filename)
-{
-    QFile file(filename);
-    file.open(QIODevice::ReadOnly);
-    QTextStream in(&file);
-    // Return all text
-    return in.readAll();
-}
+    QString readFile(QString filename)
+    {
+        QFile file(filename);
+        file.open(QIODevice::ReadOnly);
+        QTextStream in(&file);
+        // Return all text
+        return in.readAll();
+    }
 
 } // namespace io
 
@@ -61,17 +63,20 @@ CurrentFile::CurrentFile(QString filename)
     m_is_saved = false;
 }
 
-void CurrentFile::setFilename(QString filename) {
+void CurrentFile::setFilename(QString filename)
+{
     m_cfilename = filename;
     // set is_saved false
     m_is_saved = false;
 }
 
-void CurrentFile::setSaved(bool op) {
+void CurrentFile::setSaved(bool op)
+{
     m_is_saved = op;
 }
 
-bool CurrentFile::isSaved() {
+bool CurrentFile::isSaved()
+{
     return m_is_saved;
 }
 
@@ -83,7 +88,7 @@ QString CurrentFile::read()
 bool CurrentFile::save(QString text)
 {
     bool ok = io::saveText(m_cfilename, text);
-    if(ok) {
+    if (ok) {
         // set is_saved true
         m_is_saved = true;
         return true;
@@ -100,15 +105,15 @@ QString CurrentFile::name()
 bool CurrentFile::isEmpty()
 {
     // check if empty the string
-    if(m_cfilename.isEmpty())
+    if (m_cfilename.isEmpty())
         return true;
     else
         return false;
 }
 
-void CurrentFile::operator=(QString name){
+void CurrentFile::operator=(QString name)
+{
     this->setFilename(name);
 }
-
 
 } // namespace hyper

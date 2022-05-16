@@ -18,13 +18,12 @@
 
 #include "texteditor.hpp"
 
-namespace Hyper {
-
-TextEditor::TextEditor(QWidget *parent) : QTextEdit(parent)
+namespace Hyper
 {
 
+TextEditor::TextEditor(QWidget *parent)
+    : QTextEdit(parent)
+{
 }
-
-
 
 } // namespace hyper

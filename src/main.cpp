@@ -16,11 +16,11 @@
  ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include <QApplication>
-#include <QCommandLineParser>
-#include <QCommandLineOption>
 #include "mainwindow.hpp"
 #include "version.hpp"
+#include <QApplication>
+#include <QCommandLineOption>
+#include <QCommandLineParser>
 
 int main(int argc, char *argv[])
 {
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     parser.process(a);
     // Get file argument
     QStringList positionals_arguments = parser.positionalArguments();
-    if(parser.positionalArguments().count() > 0)
+    if (parser.positionalArguments().count() > 0)
         mainwindow.loadFile(positionals_arguments[0]);
 
     mainwindow.show(); // Init Window

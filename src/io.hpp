@@ -22,18 +22,20 @@
 #include <QFile>
 #include <QTextStream>
 
-namespace Hyper {
+namespace Hyper
+{
 
 /// Basic io functions
-namespace io {
-/// Open a file in the filesystem
-//bool openFile(QString filename, QIODevice::OpenModeFlag);
-/// Save the current file
-bool saveText(QString filename, QString text);
-/// Read file contents
-QString readFile(QString filename);
+namespace io
+{
+    /// Open a file in the filesystem
+    // bool openFile(QString filename, QIODevice::OpenModeFlag);
+    /// Save the current file
+    bool saveText(QString filename, QString text);
+    /// Read file contents
+    QString readFile(QString filename);
 
-} //namespace io
+} // namespace io
 
 /// Controller for current file in the editor
 class CurrentFile
@@ -41,7 +43,7 @@ class CurrentFile
 public:
     CurrentFile();
     CurrentFile(QString filename);
-    ~CurrentFile(){};
+    ~CurrentFile() {};
     /// Set a filename
     void setFilename(QString filename);
     /// Set saved the file

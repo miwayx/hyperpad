@@ -18,22 +18,20 @@
 
 #include "statusbar.hpp"
 
-namespace Hyper {
+namespace Hyper
+{
 
-StatusBar::StatusBar(QWidget *parent) : QStatusBar(parent)
+StatusBar::StatusBar(QWidget *parent)
+    : QStatusBar(parent)
 {
     // Initialize widgets
-
 }
 
-StatusBar::~StatusBar()
-{
-}
+StatusBar::~StatusBar() { }
 
 void StatusBar::sendMessage(QString message)
 {
     this->showMessage(message, 4000);
 }
-
 
 } // namespace hyper
