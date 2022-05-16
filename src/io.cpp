@@ -60,12 +60,14 @@ CurrentFile::CurrentFile()
 CurrentFile::CurrentFile(QString filename)
 {
     m_cfilename = filename;
+    m_cfinfo = QFileInfo(filename);
     m_is_saved = false;
 }
 
 void CurrentFile::setFilename(QString filename)
 {
     m_cfilename = filename;
+    m_cfinfo = QFileInfo(filename);
     // set is_saved false
     m_is_saved = false;
 }
@@ -99,7 +101,30 @@ bool CurrentFile::save(QString text)
 
 QString CurrentFile::name()
 {
-    return m_cfilename;
+    return m_cfinfo.baseName();
+}
+
+QString CurrentFile::path()
+{
+    return m_cfinfo.path();
+}
+
+int CurrentFile::size()
+{
+    return cfinfo.size();
+}
+
+io::fileType CurrentFile::filetype()
+{
+    QString ext = cfinfo.suffix();
+
+    if (ext == ".txt") {
+        return io::fileType::TXT;
+    } else if (ext == ".md") {
+        return io::fileType::MD;
+    } else {
+        return io::fileType::TXT;
+    }
 }
 
 bool CurrentFile::isEmpty()
