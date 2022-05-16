@@ -111,16 +111,16 @@ QString CurrentFile::path()
 
 int CurrentFile::size()
 {
-    return cfinfo.size();
+    return m_cfinfo.size();
 }
 
 io::fileType CurrentFile::filetype()
 {
-    QString ext = cfinfo.suffix();
+    QString ext = m_cfinfo.suffix();
 
-    if (ext == ".txt") {
+    if (ext == "txt") {
         return io::fileType::TXT;
-    } else if (ext == ".md") {
+    } else if (ext == "md") {
         return io::fileType::MD;
     } else {
         return io::fileType::TXT;
