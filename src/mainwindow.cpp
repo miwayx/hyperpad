@@ -107,8 +107,8 @@ void HyperWindow::loadFile(QString name)
     m_statusbar->sendMessage("File opened");
     // Set new window title
     onActionDocumentChanged();
-    // Read text and put in Text Editor
-    m_texteditor->setText(m_currentfile.read());
+    // Analyze text and put in Text Editor
+    m_texteditor->showText(m_currentfile);
 }
 
 void HyperWindow::storeSettings()
@@ -218,7 +218,11 @@ void HyperWindow::onActionOpen()
     if (!m_currentfile.isSaved())
         documentModified();
     QString file = QFileDialog::getOpenFileName(this, "Open a file");
-    loadFile(file);
+    if (file.isEmpty()) {
+        return;
+    } else {
+        loadFile(file);
+    }
 }
 
 void HyperWindow::onActionExit()

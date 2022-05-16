@@ -19,6 +19,7 @@
 #ifndef HYPER_TEXTEDITOR_HPP
 #define HYPER_TEXTEDITOR_HPP
 
+#include "io.hpp"
 #include <QTextEdit>
 
 namespace Hyper
@@ -29,7 +30,14 @@ class TextEditor : public QTextEdit
     Q_OBJECT
 public:
     explicit TextEditor(QWidget *parent = nullptr);
-    ~TextEditor() {};
+    ~TextEditor() { }
+    // Analyze and return the text
+    void showText(CurrentFile &file);
+    // Enable or disable markdown view
+    void setMarkdownView(bool b);
+
+private:
+    bool m_markdown_view;
 };
 
 } // namespace hyper
