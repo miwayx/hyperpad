@@ -71,6 +71,8 @@ HyperWindow::HyperWindow(QWidget *parent)
             SLOT(onActionToolbar()));
     connect(m_ui->actionVisible_StatusBar, SIGNAL(toggled(bool)), this,
             SLOT(onActionStatusbar()));
+    connect(m_ui->actionMarkdown_View, SIGNAL(toggled(bool)), this,
+            SLOT(onActionEnableMarkdownView()));
     connect(m_ui->actionToolbar_IconsOnly, SIGNAL(triggered(bool)), this,
             SLOT(onActionToolbarStyleIconsOnly()));
     connect(m_ui->actionToolbar_TextOnly, SIGNAL(triggered(bool)), this,
@@ -240,6 +242,11 @@ void HyperWindow::onActionDocumentChanged()
 {
     // Set currentFile not saved
     m_currentfile.setSaved(false);
+    // Check if the filetype is markdown for enable actions
+    if (m_currentfile.filetype() == Hyper::io::fileType::MD) {
+        m_ui->actionMarkdown_View->setEnabled(true);
+    }
+
     updateWindowCaption();
 }
 
@@ -351,6 +358,18 @@ void HyperWindow::onActionToolbarStyleTextUnderIcons()
 void HyperWindow::onActionToolbarStyleFollow()
 {
     m_ui->toolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
+}
+
+void HyperWindow::onActionEnableMarkdownView()
+{
+    if (m_ui->actionMarkdown_View->isChecked() == true) {
+        // Enable the markdown view and update text editor
+        m_texteditor->setMarkdownView(true);
+        m_texteditor->showText(m_currentfile);
+    } else {
+        m_texteditor->setMarkdownView(false);
+        m_texteditor->showText(m_currentfile);
+    }
 }
 
 void HyperWindow::onActionAboutHyper()

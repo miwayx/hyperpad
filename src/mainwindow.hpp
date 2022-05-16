@@ -81,6 +81,7 @@ private Q_SLOTS:
     void onActionToolbarStyleTextBesideIcons();
     void onActionToolbarStyleTextUnderIcons();
     void onActionToolbarStyleFollow();
+    void onActionEnableMarkdownView();
     // Menu Help
     void onActionAboutHyper();
 

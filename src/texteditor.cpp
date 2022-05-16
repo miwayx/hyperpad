@@ -24,8 +24,8 @@ namespace Hyper
 TextEditor::TextEditor(QWidget *parent)
     : QTextEdit(parent)
 {
-    // Enable by default the markdown view
-    m_markdown_view = true;
+    // Disable by default the markdown view
+    m_markdown_view = false;
 }
 
 void TextEditor::showText(CurrentFile &file)
@@ -49,6 +49,11 @@ void TextEditor::showText(CurrentFile &file)
 void TextEditor::setMarkdownView(bool b)
 {
     m_markdown_view = b;
+}
+
+bool TextEditor::markdownView()
+{
+    return m_markdown_view;
 }
 
 } // namespace hyper

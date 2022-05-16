@@ -35,6 +35,7 @@ public:
     void showText(CurrentFile &file);
     // Enable or disable markdown view
     void setMarkdownView(bool b);
+    bool markdownView();
 
 private:
     bool m_markdown_view;
