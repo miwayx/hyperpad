@@ -20,20 +20,31 @@
 #define HYPER_IO_HPP
 
 #include <QFile>
+#include <QFileInfo>
 #include <QTextStream>
 
-namespace Hyper {
+namespace Hyper
+{
 
 /// Basic io functions
-namespace io {
-/// Open a file in the filesystem
-//bool openFile(QString filename, QIODevice::OpenModeFlag);
-/// Save the current file
-bool saveText(QString filename, QString text);
-/// Read file contents
-QString readFile(QString filename);
+namespace io
+{
+    /// Open a file in the filesystem
+    // bool openFile(QString filename, QIODevice::OpenModeFlag);
+    /// Save the current file
+    bool saveText(QString filename, QString text);
+    /// Read file contents
+    QString readFile(QString filename);
 
-} //namespace io
+    // QString analyzeFile(QString filename);
+
+    /// Supported file Types
+    enum fileType {
+        TXT, // .txt
+        MD // .md
+    };
+
+} // namespace io
 
 /// Controller for current file in the editor
 class CurrentFile
@@ -41,10 +52,10 @@ class CurrentFile
 public:
     CurrentFile();
     CurrentFile(QString filename);
-    ~CurrentFile(){};
+    ~CurrentFile() { }
     /// Set a filename
     void setFilename(QString filename);
-    /// Set saved the file
+    /// Set saved the fileabsolute
     void setSaved(bool op);
     /// Return if the current file is saved
     bool isSaved();
@@ -54,7 +65,13 @@ public:
     bool save(QString text);
     /// Return the filename
     QString name();
-    // Return true if empty
+    /// Return the path to the filename
+    QString path();
+    /// Return the filetypeabsolute
+    io::fileType filetype();
+    /// Return the file size
+    int size();
+    /// Return true if empty
     bool isEmpty();
     // implemented operator "=" for assign a new name
     /// Assign a new name
@@ -63,6 +80,7 @@ public:
 private:
     // Name of the current file opened
     QString m_cfilename;
+    QFileInfo m_cfinfo;
     // if saved
     bool m_is_saved;
 };

@@ -18,13 +18,42 @@
 
 #include "texteditor.hpp"
 
-namespace Hyper {
-
-TextEditor::TextEditor(QWidget *parent) : QTextEdit(parent)
+namespace Hyper
 {
 
+TextEditor::TextEditor(QWidget *parent)
+    : QTextEdit(parent)
+{
+    // Disable by default the markdown view
+    m_markdown_view = false;
 }
 
+void TextEditor::showText(CurrentFile &file)
+{
+    QString text = file.read();
+    // Plain text
+    if (file.filetype() == io::fileType::TXT) {
+        this->setPlainText(text);
+        // Set the markdown view by default
+    } else if (file.filetype() == io::fileType::MD) {
+        if (m_markdown_view == true) {
+            this->setMarkdown(text);
+        } else {
+            this->setPlainText(text);
+        }
+    } else {
+        this->setPlainText(text);
+    }
+}
 
+void TextEditor::setMarkdownView(bool b)
+{
+    m_markdown_view = b;
+}
+
+bool TextEditor::markdownView()
+{
+    return m_markdown_view;
+}
 
 } // namespace hyper

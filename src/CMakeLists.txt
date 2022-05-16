@@ -12,6 +12,7 @@ target_link_libraries(hyperpad PRIVATE
     Qt6::Widgets
 )
 
+
 # Sources
 target_sources(hyperpad
     # Headers

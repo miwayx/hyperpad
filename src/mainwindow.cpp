@@ -18,11 +18,12 @@
 
 #include "mainwindow.hpp"
 
-#include <QMessageBox>
 #include <QFileDialog>
+#include <QMessageBox>
 
 HyperWindow::HyperWindow(QWidget *parent)
-    : QMainWindow(parent), m_ui(new Ui::MainWindow)
+    : QMainWindow(parent)
+    , m_ui(new Ui::MainWindow)
 {
     m_ui->setupUi(this);
     // Initialize Text Editor
@@ -38,42 +39,55 @@ HyperWindow::HyperWindow(QWidget *parent)
             SLOT(onActionDocumentChanged()));
     // MenuBarActions
     // Menu File
-    connect(m_ui->actionNew, SIGNAL(triggered(bool)),  this, SLOT(onActionNew()));
-    connect(m_ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(onActionOpen()));
-    connect(m_ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(onActionSave()));
-    connect(m_ui->actionSaveAs,SIGNAL(triggered(bool)), this, SLOT(onActionSaveAs()));
-    connect(m_ui->actionExit, SIGNAL(triggered(bool)), this, SLOT(onActionExit()));
+    connect(m_ui->actionNew, SIGNAL(triggered(bool)), this,
+            SLOT(onActionNew()));
+    connect(m_ui->actionOpen, SIGNAL(triggered(bool)), this,
+            SLOT(onActionOpen()));
+    connect(m_ui->actionSave, SIGNAL(triggered(bool)), this,
+            SLOT(onActionSave()));
+    connect(m_ui->actionSaveAs, SIGNAL(triggered(bool)), this,
+            SLOT(onActionSaveAs()));
+    connect(m_ui->actionExit, SIGNAL(triggered(bool)), this,
+            SLOT(onActionExit()));
     // Menu Edit
-    connect(m_ui->actionUndo, SIGNAL(triggered(bool)), this, SLOT(onActionUndo()));
-    connect(m_ui->actionRedo, SIGNAL(triggered(bool)), this, SLOT(onActionRedo()));
-    connect(m_ui->actionCut, SIGNAL(triggered(bool)), this, SLOT(onActionCut()));
-    connect(m_ui->actionCopy, SIGNAL(triggered(bool)), this, SLOT(onActionCopy()));
-    connect(m_ui->actionPaste, SIGNAL(triggered(bool)), this, SLOT(onActionPaste()));
+    connect(m_ui->actionUndo, SIGNAL(triggered(bool)), this,
+            SLOT(onActionUndo()));
+    connect(m_ui->actionRedo, SIGNAL(triggered(bool)), this,
+            SLOT(onActionRedo()));
+    connect(m_ui->actionCut, SIGNAL(triggered(bool)), this,
+            SLOT(onActionCut()));
+    connect(m_ui->actionCopy, SIGNAL(triggered(bool)), this,
+            SLOT(onActionCopy()));
+    connect(m_ui->actionPaste, SIGNAL(triggered(bool)), this,
+            SLOT(onActionPaste()));
     connect(m_ui->actionSelect_All, SIGNAL(triggered(bool)), this,
             SLOT(onActionSelectAllText()));
     // Menu View
-    connect(m_ui->actionVisible_MenuBar, SIGNAL(toggled(bool)),
-            this, SLOT(onActionMenubar()));
-    connect(m_ui->actionVisible_ToolBar, SIGNAL(toggled(bool)),
-            this, SLOT(onActionToolbar()));
-    connect(m_ui->actionMovable_ToolBar, SIGNAL(toggled(bool)),
-            this, SLOT(onActionToolbar()));
-        connect(m_ui->actionVisible_StatusBar, SIGNAL(toggled(bool)),
-                this, SLOT(onActionStatusbar()));
-    connect(m_ui->actionToolbar_IconsOnly, SIGNAL(triggered(bool)),
-            this, SLOT(onActionToolbarStyleIconsOnly()));
-    connect(m_ui->actionToolbar_TextOnly, SIGNAL(triggered(bool)),
-            this, SLOT(onActionToolbarStyleTextOnly()));
-    connect(m_ui->actionToolbar_TextBesideIcons, SIGNAL(triggered(bool)),
-            this, SLOT(onActionToolbarStyleTextBesideIcons()));
-    connect(m_ui->actionToolbar_TextUnderIcons, SIGNAL(triggered(bool)),
-            this, SLOT(onActionToolbarStyleTextUnderIcons()));
-    connect(m_ui->actionToolbar_Follow, SIGNAL(triggered(bool)),
-            this, SLOT(onActionToolbarStyleFollow()));
+    connect(m_ui->actionVisible_MenuBar, SIGNAL(toggled(bool)), this,
+            SLOT(onActionMenubar()));
+    connect(m_ui->actionVisible_ToolBar, SIGNAL(toggled(bool)), this,
+            SLOT(onActionToolbar()));
+    connect(m_ui->actionMovable_ToolBar, SIGNAL(toggled(bool)), this,
+            SLOT(onActionToolbar()));
+    connect(m_ui->actionVisible_StatusBar, SIGNAL(toggled(bool)), this,
+            SLOT(onActionStatusbar()));
+    connect(m_ui->actionMarkdown_View, SIGNAL(toggled(bool)), this,
+            SLOT(onActionEnableMarkdownView()));
+    connect(m_ui->actionToolbar_IconsOnly, SIGNAL(triggered(bool)), this,
+            SLOT(onActionToolbarStyleIconsOnly()));
+    connect(m_ui->actionToolbar_TextOnly, SIGNAL(triggered(bool)), this,
+            SLOT(onActionToolbarStyleTextOnly()));
+    connect(m_ui->actionToolbar_TextBesideIcons, SIGNAL(triggered(bool)), this,
+            SLOT(onActionToolbarStyleTextBesideIcons()));
+    connect(m_ui->actionToolbar_TextUnderIcons, SIGNAL(triggered(bool)), this,
+            SLOT(onActionToolbarStyleTextUnderIcons()));
+    connect(m_ui->actionToolbar_Follow, SIGNAL(triggered(bool)), this,
+            SLOT(onActionToolbarStyleFollow()));
     // Menu Help
-    connect(m_ui->actionAbout_Hyper, SIGNAL(triggered(bool)),
-            this, SLOT(onActionAboutHyper()));
-    connect(m_ui->actionAbout_Qt, SIGNAL(triggered(bool)), qApp, SLOT(aboutQt()));
+    connect(m_ui->actionAbout_Hyper, SIGNAL(triggered(bool)), this,
+            SLOT(onActionAboutHyper()));
+    connect(m_ui->actionAbout_Qt, SIGNAL(triggered(bool)), qApp,
+            SLOT(aboutQt()));
 
     // Read the configuration
     loadSettings();
@@ -86,7 +100,6 @@ HyperWindow::~HyperWindow()
     delete m_texteditor;
     delete m_statusbar;
     delete m_ui;
-
 }
 
 void HyperWindow::loadFile(QString name)
@@ -95,9 +108,9 @@ void HyperWindow::loadFile(QString name)
     // Send a message to statusbar
     m_statusbar->sendMessage("File opened");
     // Set new window title
-    this->setWindowTitle(m_currentfile.name());
-    // Read text and put in Text Editor
-    m_texteditor->setText(m_currentfile.read());
+    onActionDocumentChanged();
+    // Analyze text and put in Text Editor
+    m_texteditor->showText(m_currentfile);
 }
 
 void HyperWindow::storeSettings()
@@ -114,10 +127,13 @@ void HyperWindow::storeSettings()
 
 void HyperWindow::loadSettings()
 {
-    this->setGeometry(m_settings.value("window/geometry",
-                                QRect(180,150,700,360)).toRect());
-    m_ui->menubar->setHidden(m_settings.value("window/hidden_menubar").toBool());
-    m_statusbar->setHidden(m_settings.value("window/hidden_statusbar").toBool());
+    this->setGeometry(
+        m_settings.value("window/geometry", QRect(180, 150, 700, 360))
+            .toRect());
+    m_ui->menubar->setHidden(
+        m_settings.value("window/hidden_menubar").toBool());
+    m_statusbar->setHidden(
+        m_settings.value("window/hidden_statusbar").toBool());
     m_ui->toolBar->setHidden(m_settings.value("toolbar/hidden").toBool());
     m_ui->toolBar->setMovable(m_settings.value("toolbar/movable").toBool());
     m_ui->toolBar->setGeometry(m_settings.value("toolbar/geometry").toRect());
@@ -127,18 +143,17 @@ void HyperWindow::loadSettings()
 
 bool HyperWindow::documentModified()
 {
-    if(!m_currentfile.isSaved()){
-        if(m_texteditor->document()->isModified()){
+    if (!m_currentfile.isSaved()) {
+        if (m_texteditor->document()->isModified()) {
             // If the document change launch a message
             QMessageBox *msgBox = new QMessageBox(this);
             msgBox->setText("The document has been modified.");
             msgBox->setInformativeText("Do you want to save your changes?");
-            msgBox->setStandardButtons(QMessageBox::Save |
-                                       QMessageBox::Discard);
+            msgBox->setStandardButtons(QMessageBox::Save
+                                       | QMessageBox::Discard);
             msgBox->setDefaultButton(QMessageBox::Save);
             int return_code = msgBox->exec();
-            switch(return_code)
-            {
+            switch (return_code) {
             // Save the file and the preferences
             case QMessageBox::Save:
                 onActionSave();
@@ -148,7 +163,7 @@ bool HyperWindow::documentModified()
             default:
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
         return false;
@@ -170,13 +185,13 @@ void HyperWindow::setupActions()
     m_ui->toolBar->addAction(m_ui->actionPaste);
 
     // Checking
-    if(m_ui->menubar->isHidden() == false)
+    if (m_ui->menubar->isHidden() == false)
         m_ui->actionVisible_MenuBar->setChecked(true);
-    if(m_settings.value("toolbar/movable").toBool() == true)
+    if (m_settings.value("toolbar/movable").toBool() == true)
         m_ui->actionMovable_ToolBar->setChecked(true);
-    if(m_settings.value("toolbar/hidden").toBool() == true)
+    if (m_settings.value("toolbar/hidden").toBool() == true)
         m_ui->actionVisible_ToolBar->setChecked(true);
-    if(m_statusbar->isHidden() == false)
+    if (m_statusbar->isHidden() == false)
         m_ui->actionVisible_StatusBar->setChecked(true);
 }
 
@@ -184,16 +199,16 @@ void HyperWindow::updateWindowCaption()
 {
     // Check if file is read only
     QString readonly;
-    if(m_texteditor->isReadOnly())
+    if (m_texteditor->isReadOnly())
         readonly = "[read only]";
     // Set untitled caption
-    if(m_texteditor->document()->isEmpty())
+    if (m_texteditor->document()->isEmpty())
         this->setWindowTitle("Untitled" + readonly + " [*]");
 
     QString caption;
     caption = m_currentfile.name();
     // Check if is too long
-    if(caption.length() > 64)
+    if (caption.length() > 64)
         caption = caption.left(64) + "...";
 
     this->setWindowTitle(caption);
@@ -202,19 +217,24 @@ void HyperWindow::updateWindowCaption()
 void HyperWindow::onActionOpen()
 {
     // Check for the document
-    if(!m_currentfile.isSaved())
+    if (!m_currentfile.isSaved())
         documentModified();
     QString file = QFileDialog::getOpenFileName(this, "Open a file");
-    loadFile(file);
-
+    if (file.isEmpty()) {
+        return;
+    } else {
+        loadFile(file);
+    }
 }
 
 void HyperWindow::onActionExit()
 {
-    if(!documentModified()){
+    if (!documentModified()) {
         // Save the preferences
         storeSettings();
         exit(0);
+    } else {
+        return;
     }
 }
 
@@ -222,12 +242,17 @@ void HyperWindow::onActionDocumentChanged()
 {
     // Set currentFile not saved
     m_currentfile.setSaved(false);
+    // Check if the filetype is markdown for enable actions
+    if (m_currentfile.filetype() == Hyper::io::fileType::MD) {
+        m_ui->actionMarkdown_View->setEnabled(true);
+    }
+
     updateWindowCaption();
 }
 
 void HyperWindow::onActionNew()
 {
-    if(!m_currentfile.isSaved())
+    if (!m_currentfile.isSaved())
         documentModified();
     // Clear the buffer text and the current file
     m_currentfile = QString();
@@ -243,7 +268,7 @@ void HyperWindow::onActionSave()
     // if empty launch a dialog for save the file buffer
     // check io errors
     bool ok;
-    if(m_currentfile.isEmpty()) {
+    if (m_currentfile.isEmpty()) {
         QString file = QFileDialog::getSaveFileName(this, "Save");
         m_currentfile = file;
         // Save the new file
@@ -252,7 +277,7 @@ void HyperWindow::onActionSave()
         // Save the current file
         ok = m_currentfile.save(m_texteditor->toPlainText());
     }
-    if(ok) {
+    if (ok) {
         m_statusbar->sendMessage("File saved successfully");
     } else {
         m_statusbar->sendMessage("Cannot save the file");
@@ -265,7 +290,7 @@ void HyperWindow::onActionSaveAs()
     QString newfile = QFileDialog::getSaveFileName(this, "Save as");
     m_currentfile = newfile;
     bool ok = m_currentfile.save(m_texteditor->toPlainText());
-    if(ok) {
+    if (ok) {
         m_statusbar->sendMessage("File saved successfully");
     } else {
         m_statusbar->sendMessage("Cannot save the file");
@@ -275,9 +300,9 @@ void HyperWindow::onActionSaveAs()
 void HyperWindow::onActionMenubar()
 {
     // Get the state of menubar
-    if(m_ui->actionVisible_MenuBar->isChecked() == true){
+    if (m_ui->actionVisible_MenuBar->isChecked() == true) {
         m_ui->menubar->setVisible(true);
-    }else{
+    } else {
         m_ui->menubar->setVisible(false);
     }
 }
@@ -286,15 +311,15 @@ void HyperWindow::onActionToolbar()
 {
     // Get the state of toolbar
     // is visible
-    if(m_ui->actionVisible_ToolBar->isChecked() == true){
+    if (m_ui->actionVisible_ToolBar->isChecked() == true) {
         m_ui->toolBar->setVisible(false);
-    }else{
+    } else {
         m_ui->toolBar->setVisible(true);
     }
     // is movable
-    if(m_ui->actionMovable_ToolBar->isChecked() == true){
+    if (m_ui->actionMovable_ToolBar->isChecked() == true) {
         m_ui->toolBar->setMovable(true);
-    }else{
+    } else {
         m_ui->toolBar->setMovable(false);
     }
 }
@@ -302,7 +327,7 @@ void HyperWindow::onActionToolbar()
 void HyperWindow::onActionStatusbar()
 {
     // Get the state of statubar
-    if(m_ui->actionVisible_StatusBar->isChecked()== true) {
+    if (m_ui->actionVisible_StatusBar->isChecked() == true) {
         m_statusbar->setVisible(true);
     } else {
         m_statusbar->setVisible(false);
@@ -335,36 +360,47 @@ void HyperWindow::onActionToolbarStyleFollow()
     m_ui->toolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
 }
 
+void HyperWindow::onActionEnableMarkdownView()
+{
+    if (m_ui->actionMarkdown_View->isChecked() == true) {
+        // Enable the markdown view and update text editor
+        m_texteditor->setMarkdownView(true);
+        m_texteditor->showText(m_currentfile);
+    } else {
+        m_texteditor->setMarkdownView(false);
+        m_texteditor->showText(m_currentfile);
+    }
+}
+
 void HyperWindow::onActionAboutHyper()
 {
     QMessageBox *msg = new QMessageBox(this);
     msg->setWindowTitle("About HyperPad");
     msg->setIconPixmap(QPixmap(QString(":/icons/hyper_ico.png")));
     QString text =
-       // Version and libs
-      "Version: " + qApp->applicationVersion() +
-      "\nLibraries:\n" +
-        qVersion() +
-      // Author
-      "\nAuthors:\n" +
-        "(C) 2021 Ernest C. Suarez <ernestcsuarez@gmail.com>\n" +
-      // Licence
-      "\nLicence: GNU General Public Licence Version 3\n" +
-        qApp->organizationDomain();
+        // Version and libs
+        "Version: " + qApp->applicationVersion() + "\nLibraries:\n" + qVersion()
+        +
+        // Author
+        "\nAuthors:\n" + "(C) 2021 Ernest C. Suarez <ernestcsuarez@gmail.com>\n"
+        +
+        // Licence
+        "\nLicence: GNU General Public Licence Version 3\n"
+        + qApp->organizationDomain();
     msg->setText(text);
     msg->exec();
 }
 
 void HyperWindow::onActionUndo()
 {
-    if(m_texteditor->isUndoRedoEnabled()) {
+    if (m_texteditor->isUndoRedoEnabled()) {
         m_texteditor->undo();
     }
 }
 
 void HyperWindow::onActionRedo()
 {
-    if(m_texteditor->isUndoRedoEnabled()) {
+    if (m_texteditor->isUndoRedoEnabled()) {
         m_texteditor->redo();
     }
 }
@@ -381,7 +417,7 @@ void HyperWindow::onActionCopy()
 
 void HyperWindow::onActionPaste()
 {
-    if(m_texteditor->canPaste()) {
+    if (m_texteditor->canPaste()) {
         m_texteditor->paste();
     } else {
         // Send a error message to statusbar
