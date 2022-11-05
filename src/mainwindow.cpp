@@ -1,6 +1,6 @@
 /**
  ** This file is part of the hyperpad project.
- ** Copyright 2021 Ernest C. Suarez <ernestcsuarez@gmail.com>.
+ ** Copyright 2021-2022 Ernest C. Suarez <ernestcsuarez@gmail.com>.
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -27,10 +27,10 @@ HyperWindow::HyperWindow(QWidget *parent)
 {
     m_ui->setupUi(this);
     // Initialize Text Editor
-    m_texteditor = new Hyper::TextEditor(this);
+    m_texteditor = new hyper::ui::TextEditor(this);
     this->setCentralWidget(m_texteditor);
     // Initialize StatusBar
-    m_statusbar = new Hyper::StatusBar();
+    m_statusbar = new hyper::ui::StatusBar();
     this->setStatusBar(m_statusbar);
     // Connecting signals
     // Verify if exit of the app
@@ -243,7 +243,7 @@ void HyperWindow::onActionDocumentChanged()
     // Set currentFile not saved
     m_currentfile.setSaved(false);
     // Check if the filetype is markdown for enable actions
-    if (m_currentfile.filetype() == Hyper::io::fileType::MD) {
+    if (m_currentfile.filetype() == hyper::io::fileType::MD) {
         m_ui->actionMarkdown_View->setEnabled(true);
     }
 
@@ -379,10 +379,10 @@ void HyperWindow::onActionAboutHyper()
     msg->setIconPixmap(QPixmap(QString(":/icons/hyper_ico.png")));
     QString text =
         // Version and libs
-        "Version: " + qApp->applicationVersion() + "\nLibraries:\n" + qVersion()
-        +
+        "Version: " + qApp->applicationVersion() + "\nLibraries:\n" + "Qt ("
+        + qVersion() + ")" +
         // Author
-        "\nAuthors:\n" + "(C) 2021 Ernest C. Suarez <ernestcsuarez@gmail.com>\n"
+        "\nAuthors:\n" + "(C) 2021-2022 Ernest C. Suarez <ernestcsuarez@gmail.com>\n"
         +
         // Licence
         "\nLicence: GNU General Public Licence Version 3\n"

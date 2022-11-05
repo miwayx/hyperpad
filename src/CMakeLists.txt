@@ -1,15 +1,15 @@
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Find Qt
-find_package(Qt6 COMPONENTS Core Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 # Executable
 add_executable(hyperpad)
 
 # Link
 target_link_libraries(hyperpad PRIVATE
-    Qt6::Core
-    Qt6::Widgets
+    Qt5::Core
+    Qt5::Widgets
 )
 
 
@@ -19,15 +19,13 @@ target_sources(hyperpad
     PUBLIC
     mainwindow.hpp
     io.hpp
-    texteditor.hpp
-    statusbar.hpp
+    ui.hpp
     # Sources
     PRIVATE
     main.cpp
     mainwindow.cpp
     io.cpp
-    texteditor.cpp
-    statusbar.cpp
+    ui.cpp
     # UI files
     mainwindow.ui
     # Resources

@@ -16,11 +16,12 @@
  ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include "mainwindow.hpp"
-#include "version.hpp"
 #include <QApplication>
 #include <QCommandLineOption>
 #include <QCommandLineParser>
+
+#include "mainwindow.hpp"
+#include "version.hpp"
 
 int main(int argc, char *argv[])
 {

@@ -1,6 +1,6 @@
 /**
  ** This file is part of the hyperpad project.
- ** Copyright 2021 Ernest C. Suarez <ernestcsuarez@gmail.com>.
+ ** Copyright 2021-2022 Ernest C. Suarez <ernestcsuarez@gmail.com>.
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -23,28 +23,23 @@
 #include <QFileInfo>
 #include <QTextStream>
 
-namespace Hyper
-{
-
 /// Basic io functions
-namespace io
-{
-    /// Open a file in the filesystem
-    // bool openFile(QString filename, QIODevice::OpenModeFlag);
-    /// Save the current file
-    bool saveText(QString filename, QString text);
-    /// Read file contents
-    QString readFile(QString filename);
+namespace hyper::io {
 
-    // QString analyzeFile(QString filename);
+/// Open file in the filesystem
+// bool openFile(QString filename, QIODevice::OpenModeFlag);
+/// Save the current file
+bool saveText(QString filename, QString text);
+/// Read file contents
+QString readFile(QString filename);
 
-    /// Supported file Types
-    enum fileType {
-        TXT, // .txt
-        MD // .md
-    };
+// QString analyzeFile(QString filename);
 
-} // namespace io
+/// Supported file Types
+enum fileType {
+    TXT, // .txt
+    MD // .md
+};
 
 /// Controller for current file in the editor
 class CurrentFile
@@ -68,7 +63,7 @@ public:
     /// Return the path to the filename
     QString path();
     /// Return the filetypeabsolute
-    io::fileType filetype();
+    fileType filetype();
     /// Return the file size
     int size();
     /// Return true if empty
@@ -78,13 +73,14 @@ public:
     void operator=(QString name);
 
 private:
-    // Name of the current file opened
-    QString m_cfilename;
+    // Current name of the file open
+    QString   m_cfilename;
     QFileInfo m_cfinfo;
-    // if saved
+    // if its saved
     bool m_is_saved;
 };
 
-} // namespace hyper
+} // namespace Hyper::io
+
 
 #endif // HYPER_IO_HPP

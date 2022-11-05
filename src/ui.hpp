@@ -1,6 +1,6 @@
 /**
  ** This file is part of the hyperpad project.
- ** Copyright 2021 Ernest C. Suarez <ernestcsuarez@gmail.com>.
+ ** Copyright 2022 Ernest C. Suarez <ernestcsuarez@gmail.com>.
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -16,14 +16,15 @@
  ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#ifndef HYPER_TEXTEDITOR_HPP
-#define HYPER_TEXTEDITOR_HPP
+#ifndef HYPER_UI_HPP
+#define HYPER_UI_HPP
+
+#include <QTextEdit>
+#include <QStatusBar>
 
 #include "io.hpp"
-#include <QTextEdit>
 
-namespace Hyper
-{
+namespace hyper::ui {
 
 class TextEditor : public QTextEdit
 {
@@ -32,7 +33,7 @@ public:
     explicit TextEditor(QWidget *parent = nullptr);
     ~TextEditor() { }
     // Analyze and return the text
-    void showText(CurrentFile &file);
+    void showText(io::CurrentFile &file);
     // Enable or disable markdown view
     void setMarkdownView(bool b);
     bool markdownView();
@@ -41,6 +42,16 @@ private:
     bool m_markdown_view;
 };
 
-} // namespace hyper
+class StatusBar : public QStatusBar
+{
+    Q_OBJECT
+public:
+    explicit StatusBar(QWidget *parent = nullptr);
+    ~StatusBar();
+    /// Send a message to statusbar for 4 seconds
+    void sendMessage(QString message);
+};
 
-#endif // HYPER_TEXTEDITOR_HPP
+} //namespace hyper::ui
+
+#endif // HYPER_UI_HPP

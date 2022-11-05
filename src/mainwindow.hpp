@@ -1,6 +1,6 @@
 /**
  ** This file is part of the hyperpad project.
- ** Copyright 2021 Ernest C. Suarez <ernestcsuarez@gmail.com>.
+ ** Copyright 2021-2022 Ernest C. Suarez <ernestcsuarez@gmail.com>.
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -23,8 +23,7 @@
 #include <QSettings>
 
 #include "io.hpp"
-#include "statusbar.hpp"
-#include "texteditor.hpp"
+#include "ui.hpp"
 #include "ui_mainwindow.h"
 
 QT_BEGIN_NAMESPACE
@@ -56,7 +55,7 @@ private:
     void updateWindowCaption();
 
 private Q_SLOTS:
-    // Actions
+    // *Actions*
     void onActionDocumentChanged();
     // Actions in menubar
     // Menu File
@@ -92,11 +91,11 @@ private:
     // Ui
     Ui::MainWindow *m_ui;
     // Current file
-    Hyper::CurrentFile m_currentfile;
+    hyper::io::CurrentFile m_currentfile;
     // Main text editor
-    Hyper::TextEditor *m_texteditor;
+    hyper::ui::TextEditor *m_texteditor;
     // StatusBar
-    Hyper::StatusBar *m_statusbar;
+    hyper::ui::StatusBar *m_statusbar;
 };
 
 #endif // HYPER_MAINWINDOW_HPP

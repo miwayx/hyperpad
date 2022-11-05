@@ -1,6 +1,6 @@
 /**
  ** This file is part of the hyperpad project.
- ** Copyright 2021 Ernest C. Suarez <ernestcsuarez@gmail.com>.
+ ** Copyright 2021-2022 Ernest C. Suarez <ernestcsuarez@gmail.com>.
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -18,37 +18,31 @@
 
 #include "io.hpp"
 
-namespace Hyper
+namespace hyper::io {
+
+bool saveText(QString filename, QString text)
 {
+    QFile file(filename);
+    if (file.open(QIODevice::WriteOnly)) {
+        QTextStream out(&file);
+        // Write text in the file buffer
+        out << text;
+        // all ok
+        file.close();
+        return true;
+    } else {
+        return false;
+    }
+}
 
-namespace io
+QString readFile(QString filename)
 {
-
-    bool saveText(QString filename, QString text)
-    {
-        QFile file(filename);
-        if (file.open(QIODevice::WriteOnly)) {
-            QTextStream out(&file);
-            // Write text in the file buffer
-            out << text;
-            // all ok
-            file.close();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    QString readFile(QString filename)
-    {
-        QFile file(filename);
-        file.open(QIODevice::ReadOnly);
-        QTextStream in(&file);
-        // Return all text
-        return in.readAll();
-    }
-
-} // namespace io
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly);
+    QTextStream in(&file);
+    // Return all text
+    return in.readAll();
+}
 
 // class currentFile
 CurrentFile::CurrentFile()
@@ -141,4 +135,4 @@ void CurrentFile::operator=(QString name)
     this->setFilename(name);
 }
 
-} // namespace hyper
+} // namespace hyper::io
