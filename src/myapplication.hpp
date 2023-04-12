@@ -1,6 +1,6 @@
 /**
  ** This file is part of the hyperpad project.
- ** Copyright 2021 Ernest C. Suarez <ernestcsuarez@gmail.com>.
+ ** Copyright 2023 Stanislav Mikhailov (xavetar).
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -16,11 +16,33 @@
  ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include <QApplication>
-#include "myapplication.hpp"
+#ifndef MYAPPLICATION_HPP
+#define MYAPPLICATION_HPP
 
-int main(int argc, char *argv[])
+#include <QApplication>
+#include "mainwindow.hpp"
+
+#ifdef Q_OS_MAC
+#include <QFileOpenEvent>
+#endif
+
+class MyApplication : public QApplication
 {
-    MyApplication a(argc, argv);
-    return a.run();
-}
+    Q_OBJECT
+
+public:
+    MyApplication(int &argc, char **argv);
+    ~MyApplication();
+    int run();
+
+#ifdef Q_OS_MAC
+protected:
+    bool event(QEvent *event);
+#endif
+
+private:
+    HyperWindow* mainwindow;
+};
+
+
+#endif // MYAPPLICATION_HPP

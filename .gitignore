@@ -2,5 +2,5 @@ build-Debug
 build
 CMakeLists.txt.user
 src/version.hpp
-
+.DS_Store
 
