@@ -16,10 +16,9 @@
  ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include "mainwindow.hpp"
-
 #include <QFileDialog>
 #include <QMessageBox>
+#include "mainwindow.hpp"
 
 HyperWindow::HyperWindow(QWidget *parent)
     : QMainWindow(parent)

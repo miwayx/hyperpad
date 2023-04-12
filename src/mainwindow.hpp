@@ -19,6 +19,7 @@
 #ifndef HYPER_MAINWINDOW_HPP
 #define HYPER_MAINWINDOW_HPP
 
+#include <QApplication>
 #include <QMainWindow>
 #include <QSettings>
 
@@ -42,8 +43,7 @@ public:
     ~HyperWindow();
     // Load a file
     void loadFile(QString name);
-
-    // Private methods
+// Private methods
 private:
     bool documentModified();
     void setupActions();
